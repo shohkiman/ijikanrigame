@@ -100,7 +100,7 @@ function setupMap(){
  for(let y=120;y<W;y+=180){
   [24,76].forEach((x,j)=>{
    let p=document.createElement("div");p.className="plant";p.style.left=(j===0?"17%":"72%");p.style.top=(y-36)+"px";world.append(p);
-   plantZones.push({x,j===0?side="L":side="R",cx:x,y:y,w:10,h:72});
+   plantZones.push({x:x, side:(j===0?"L":"R"), cx:x, y:y, w:10, h:72});
    let t=document.createElement("div");t.className="tree";t.style.left=x+"%";t.style.top=y+"px";world.append(t);treePts.push({x,y})
   })
  }
