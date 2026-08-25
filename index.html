@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Prototype 4.2.2</title>
+<title>Good Street Prototype 4.2.3</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
@@ -57,14 +57,15 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 <div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・作業遅め</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>320 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>300 GSpt｜落ち葉のプロ</span></button></div>
 <div class="shop hide" id="machines"><button class="buy" data-buy="robot">🤖 草刈りロボ<span>420 GSpt｜範囲草刈り</span></button><button class="buy" data-buy="boost">⚙ 機材強化 Lv<b>0</b><span>400 GSpt</span></button></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.2.2</h2><p>4.2は移動と採点を更新。後半ほどタスクが増えます。<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
-<details style="margin:12px 0;text-align:left;background:#101a22;border:1px solid #ffffff18;border-radius:12px;padding:10px">
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.2.3</h2><p>4.2は移動と採点を更新。後半ほどタスクが増えます。<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 8px">
+<button id="copyLog" type="button" style="padding:11px;border-radius:10px;border:1px solid #ffffff22;background:#315d3b;color:white;font-weight:900">📋 ログをコピー</button>
+<button id="saveLog" type="button" style="padding:11px;border-radius:10px;border:1px solid #ffffff22;background:#26343e;color:white;font-weight:900">JSON保存</button>
+</div>
+<details style="margin:8px 0 12px;text-align:left;background:#101a22;border:1px solid #ffffff18;border-radius:12px;padding:10px">
 <summary style="cursor:pointer;font-weight:900">📊 プレイログを見る</summary>
-<pre id="logPreview" style="max-height:170px;overflow:auto;white-space:pre-wrap;font:10px/1.45 monospace;color:#aebcc6;background:#0a1117;padding:8px;border-radius:8px"></pre>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px">
-<button id="copyLog" type="button" style="padding:9px;border-radius:10px;border:1px solid #ffffff22;background:#26343e;color:white;font-weight:900">ログをコピー</button>
-<button id="saveLog" type="button" style="padding:9px;border-radius:10px;border:1px solid #ffffff22;background:#26343e;color:white;font-weight:900">JSON保存</button>
-</div></details>
+<pre id="logPreview" style="max-height:125px;overflow:auto;white-space:pre-wrap;font:10px/1.45 monospace;color:#aebcc6;background:#0a1117;padding:8px;border-radius:8px"></pre>
+</details>
 <button id="again" class="primary">もう一度</button></div></div>
 <script>
 (()=>{
@@ -75,7 +76,7 @@ let playLog=null,lastLogJson="";
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))} function side(x){return x<50?"L":"R"} function camera(y){cam=clamp(y,0,W-view.clientHeight);world.style.transform=`translateY(${-cam}px)`}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"4.2.2",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"4.2.3",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
 function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;return JSON.stringify({...playLog,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length}},null,2)}
 
