@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Prototype 4.1</title>
+<title>Good Street Prototype 4.2</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
 header{z-index:30;padding:8px 10px;background:#16232d;border-bottom:1px solid #ffffff22}.top{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;font-weight:1000}.time{font-size:24px}.season{background:#ffffff12;border-radius:99px;padding:5px 9px}.pts{color:#ffe76b}.sub{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:#d6dfe5}
 #view{position:relative;overflow:hidden;touch-action:none;background:#93cfe2}#world{position:absolute;left:0;top:0;width:100%;height:2500px;background:#93cfe2}
@@ -21,13 +21,35 @@ header{z-index:30;padding:8px 10px;background:#16232d;border-bottom:1px solid #f
 .kid{width:30px;height:30px;background:#7ad6ef;font-size:16px}.plog{width:34px;height:34px;background:#ef8b62;font-size:19px}.sweep{width:34px;height:34px;background:#b7a073;font-size:19px}.robot{width:36px;height:36px;background:#a8b3bc;font-size:20px;border-radius:9px}
 .prog{position:absolute;top:-10px;width:42px;height:5px;border-radius:9px;background:#26323b;border:1px solid #fff;overflow:hidden}.prog i{display:block;width:0;height:100%;background:#6fed87}
 .spark,.score{position:absolute;z-index:25;pointer-events:none;transform:translate(-50%,-50%);font-weight:1000}.spark{font-size:24px;animation:sp .6s forwards}@keyframes sp{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}40%{opacity:1;transform:translate(-50%,-50%) scale(1.5)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.4)}}.score{font-size:13px;color:#fff26d;text-shadow:0 2px #000;animation:rise .9s forwards}@keyframes rise{to{opacity:0;transform:translate(-50%,-70px)}}
+
+.statusRack{position:absolute;top:48px;z-index:44;pointer-events:none;background:#10202cce;border:1px solid #ffffff24;border-radius:10px;padding:5px 4px;min-width:43px;backdrop-filter:blur(3px)}
+.statusRack.left{left:5px}.statusRack.right{right:5px}
+.statusRack .ttl{font-size:7px;letter-spacing:.5px;color:#aebdc7;text-align:center;margin-bottom:3px;font-weight:1000}
+.statusRack .row{display:flex;align-items:center;justify-content:center;gap:2px;min-height:19px;font-size:13px;font-weight:1000;white-space:nowrap}
+.statusRack .row small{font-size:9px;color:#fff}
+.statusRack .zero{opacity:.34}
+.statusRack.flash{animation:rackflash .45s ease-out}
+@keyframes rackflash{0%{transform:scale(1)}35%{transform:scale(1.12);box-shadow:0 0 14px #8fff9f}100%{transform:scale(1)}}
+
 #toast{position:absolute;z-index:45;top:10px;left:50%;transform:translateX(-50%);padding:8px 11px;background:#101820eb;border-radius:9px;font-size:12px;font-weight:900;opacity:0;white-space:nowrap}.on{opacity:1!important}
 #comboFx{position:absolute;left:50%;top:24%;z-index:40;transform:translate(-50%,-50%);font-size:24px;font-weight:1000;text-align:center;opacity:0;text-shadow:0 4px #0008}.go{animation:combo .7s}@keyframes combo{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-70%) scale(1)}}
 footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;overflow:auto}.tabs{display:flex;gap:5px;margin-bottom:5px}.tab{flex:1;border:0;border-radius:8px;padding:5px;background:#283640;color:#b8c3ca;font-weight:900;font-size:11px}.tab.active{background:#4b6b58;color:#fff}.shop{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.buy{height:48px;border-radius:9px;border:1px solid #ffffff18;background:#222d36;color:#76848f;font-weight:900;font-size:11px;padding:3px}.buy span{display:block;font-size:9px;margin-top:2px}.buy.ready{color:#fff;background:#29452f;border-color:#6bd17f}.buy.armed{background:#4d7a40}
 #ov{position:fixed;inset:0;z-index:80;background:#071019df;display:grid;place-items:center;padding:18px}.card{width:min(430px,100%);background:#1a2933;border-radius:20px;padding:22px;text-align:center}.card p{line-height:1.6;color:#d5dfe5;font-size:14px}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#72e288;font-weight:1000;font-size:18px}.hide{display:none!important}
 </style></head>
 <body><div id="app"><header><div class="top"><div id="time" class="time">02:00</div><div id="season" class="season">🌸 春</div><div id="pts" class="pts">0 GSpt</div></div><div class="sub"><span id="status">タスクをタップ！</span><span id="combo">COMBO 0</span></div></header>
-<main id="view"><div id="world"><div class="build bl"></div><div class="build br"></div><div class="walk wl"></div><div class="walk wr"></div><div class="road"></div></div><div id="comboFx"></div><div id="toast"></div></main>
+<main id="view"><div id="world"><div class="build bl"></div><div class="build br"></div><div class="walk wl"></div><div class="walk wr"></div><div class="road"></div></div><div id="comboFx"></div><div id="toast"></div>
+<div id="gearRack" class="statusRack left"><div class="ttl">GEAR</div>
+<div class="row" data-stat="trash">🗑 <small>1</small></div>
+<div class="row" data-stat="grass">🌿 <small>1</small></div>
+<div class="row" data-stat="leaf">🍂 <small>1</small></div>
+<div class="row" data-stat="poop">💩 <small>1</small></div>
+<div class="row" data-stat="boost">⚙️ <small>0</small></div>
+<div class="row" data-stat="robot">🤖 <small>0</small></div></div>
+<div id="teamRack" class="statusRack right"><div class="ttl">TEAM</div>
+<div class="row" data-stat="kids">👦👧👦 <small>0</small></div>
+<div class="row" data-stat="plog">🏃 <small>0</small></div>
+<div class="row" data-stat="sweep">🧹 <small>0</small></div></div>
+</main>
 <footer><div class="tabs"><button class="tab active" data-tab="tools">道具</button><button class="tab" data-tab="friends">仲間</button><button class="tab" data-tab="machines">機材</button></div>
 <div class="shop" id="tools">
 <button class="buy" data-buy="trash">🗑 トング ×<b>1</b><span>70 GSpt</span></button><button class="buy" data-buy="grass">🌿 鎌 ×<b>1</b><span>70 GSpt</span></button><button class="buy" data-buy="leaf">🍂 竹ぼうき ×<b>1</b><span>80 GSpt</span></button><button class="buy" data-buy="poop">💩 ブラシ ×<b>1</b><span>90 GSpt</span></button>
@@ -35,7 +57,7 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 <div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・作業遅め</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>320 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>300 GSpt｜落ち葉のプロ</span></button></div>
 <div class="shop hide" id="machines"><button class="buy" data-buy="robot">🤖 草刈りロボ<span>420 GSpt｜範囲草刈り</span></button><button class="buy" data-buy="boost">⚙ 機材強化 Lv<b>0</b><span>400 GSpt</span></button></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.1</h2><p>4.1はバランステスト版。後半ほどタスクが増えます。<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p><button id="again" class="primary">もう一度</button></div></div>
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.2</h2><p>4.2は移動と採点を更新。後半ほどタスクが増えます。<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p><button id="again" class="primary">もう一度</button></div></div>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), world=$("#world"),view=$("#view"),W=2500,D=120;
@@ -44,12 +66,40 @@ const crossings=[760,1640],plants=[],trees=[],signals=[]; let run=0,left=D,pts=0
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))} function side(x){return x<50?"L":"R"} function camera(y){cam=clamp(y,0,W-view.clientHeight);world.style.transform=`translateY(${-cam}px)`}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
+function countUnits(type){return units.filter(u=>u.dataset.type===type).length}
+function updateRacks(flashKey=null){
+ const vals={
+  trash:inv.trash,grass:inv.grass,leaf:inv.leaf,poop:inv.poop,boost:machine,
+  robot:countUnits("robot"),kids:Math.ceil(countUnits("kid")/3),
+  plog:countUnits("plog"),sweep:countUnits("sweep")
+ };
+ document.querySelectorAll(".statusRack .row").forEach(r=>{
+  const k=r.dataset.stat,v=vals[k]??0;
+  r.querySelector("small").textContent=v;
+  r.classList.toggle("zero",v===0);
+ });
+ if(flashKey){
+  const row=document.querySelector(`.statusRack .row[data-stat="${flashKey}"]`);
+  if(row){const rack=row.closest(".statusRack");rack.classList.remove("flash");void rack.offsetWidth;rack.classList.add("flash")}
+ }
+}
 function setup(){for(let y=120;y<W;y+=175){[35,65].forEach((x,j)=>{let p=document.createElement("div");p.className="plant";p.style.left=(j?62:29)+"%";p.style.top=(y-42)+"px";world.append(p);plants.push({x,y,side:j?"R":"L"});let t=document.createElement("div");t.className="tree";t.style.left=x+"%";t.style.top=y+"px";world.append(t);trees.push({x,y})})}
 crossings.forEach((y,i)=>{let c=document.createElement("div");c.className="cross";c.style.top=(y-26)+"px";world.append(c);if(i===0)[37,63].forEach(x=>{let s=document.createElement("div");s.className="signal green";s.style.left=x+"%";s.style.top=(y-35)+"px";world.append(s);signals.push({x,y:y-35,e:s})})})}setup();
 const player=document.createElement("div");player.className="e unit";player.id="player";player.innerHTML='🦺<span class="you">YOU</span>';player.style.left="27%";player.style.top="2240px";world.append(player);
-function hud(){let m=Math.floor(left/60),s=String(left%60).padStart(2,"0");$("#time").textContent=`${String(m).padStart(2,"0")}:${s}`;$("#pts").innerHTML=pts+" GSpt<br><small style=\"font-size:9px;color:#b9c5cc\">TOTAL "+totalPts+"</small>";$("#combo").textContent="COMBO "+combo;document.querySelectorAll(".buy").forEach(b=>{let k=b.dataset.buy;b.classList.toggle("ready",run&&pts>=prices[k]);let sp=b.querySelector("span");if(["trash","grass","leaf","poop"].includes(k))sp.textContent=prices[k]+" GSpt";if(k==="boost"){b.querySelector("b").textContent=machine;sp.textContent=prices[k]+" GSpt"}})}
+function hud(){let m=Math.floor(left/60),s=String(left%60).padStart(2,"0");$("#time").textContent=`${String(m).padStart(2,"0")}:${s}`;$("#pts").innerHTML=pts+" GSpt<br><small style=\"font-size:9px;color:#b9c5cc\">TOTAL "+totalPts+"</small>";$("#combo").textContent="COMBO "+combo;document.querySelectorAll(".buy").forEach(b=>{let k=b.dataset.buy;b.classList.toggle("ready",run&&pts>=prices[k]);let sp=b.querySelector("span");if(["trash","grass","leaf","poop"].includes(k))sp.textContent=prices[k]+" GSpt";if(k==="boost"){b.querySelector("b").textContent=machine;sp.textContent=prices[k]+" GSpt"}});updateRacks()}
 let signalGreen=true;function toggleSignal(){signalGreen=!signalGreen;signals.forEach(s=>s.e.classList.toggle("green",signalGreen))}
-function move(el,x,y,speed=1){return new Promise(r=>{el.style.transitionDuration=(.38/speed)+"s";el.style.left=x+"%";el.style.top=y+"px";setTimeout(r,390/speed)})}
+function move(el,x,y,speed=1){
+ return new Promise(r=>{
+  const fx=parseFloat(el.style.left)||x, fy=parseFloat(el.style.top)||y;
+  const dx=((x-fx)/100)*view.clientWidth, dy=y-fy;
+  const dist=Math.hypot(dx,dy);
+  const basePxPerSec=175;
+  const duration=clamp(dist/(basePxPerSec*speed),.24,3.4);
+  el.style.transitionDuration=duration+"s";
+  el.style.left=x+"%";el.style.top=y+"px";
+  setTimeout(r,duration*1000+25);
+ })
+}
 async function route(el,fx,fy,tx,ty,speed=1,isP=0){if(side(fx)===side(tx)){await move(el,tx,ty,speed);if(isP)camera(ty-view.clientHeight*.48);return}let cy=crossings.slice().sort((a,b)=>Math.abs(a-(fy+ty)/2)-Math.abs(b-(fy+ty)/2))[0],ex=side(fx)==="L"?37:63,ox=side(fx)==="L"?63:37;await move(el,ex,cy,speed);if(isP)camera(cy-view.clientHeight*.48);if(cy===760)while(run&&!signalGreen){if(isP)$("#status").textContent="🚦 信号待ち…";await new Promise(r=>setTimeout(r,200))}await move(el,ox,cy,speed);await move(el,tx,ty,speed);if(isP)camera(ty-view.clientHeight*.48)}
 function kind(){let r=Math.random();if(season===1)return r<.58?"grass":r<.78?"trash":r<.9?"poop":"leaf";if(season===2)return r<.6?"leaf":r<.8?"trash":r<.91?"grass":"poop";if(season===3)return r<.48?"poop":r<.73?"trash":r<.92?"leaf":"grass";return r<.42?"grass":r<.72?"trash":r<.9?"poop":"leaf"}
 function spawn(k=kind(),near=null){if(!run||tasks.length>32)return;let x,y;if(near){x=clamp(near.x+(Math.random()-.5)*5,20,80);y=clamp(near.y+(Math.random()-.5)*70,60,W-60)}
@@ -68,14 +118,44 @@ function makeUnit(type,x,y,ico){let u=document.createElement("div");u.className=
 if(type==="kid"){u.playTimer=setInterval(()=>{if(!run||u.dataset.busy==="1"||u.dataset.play==="1")return;u.dataset.play="1";let old=u.textContent;u.textContent=["⚽","🪲","👹"][Math.floor(Math.random()*3)];setTimeout(()=>{if(u.isConnected){u.textContent=old;u.dataset.play="0";assign()}},5000+Math.random()*3000)},15000+Math.random()*7000)}
 return u}
 function buyKids(){[0,1,2].forEach(i=>makeUnit("kid",25+i*3,cam+view.clientHeight*.72+i*18,["👦","👧","👦"][i]));toast("👦👧👦 子供3人組が参加！")}
-function assign(){units.forEach(u=>{if(u.dataset.busy==="1"||u.dataset.play==="1")return;let type=u.dataset.type,a=tasks.filter(t=>!t.busy);if(type==="plog")a=a.filter(t=>t.k==="trash");if(type==="robot")a=a.filter(t=>t.k==="grass");if(type==="sweep"){let leaf=a.filter(t=>t.k==="leaf");if(leaf.length)a=leaf}if(!a.length)return;let ux=parseFloat(u.style.left),uy=parseFloat(u.style.top);a.sort((p,q)=>Math.abs(p.y-uy)-Math.abs(q.y-uy));let o=a[0];o.busy=1;u.dataset.busy="1";let speed=type==="kid"?1.8:type==="plog"?1.65:type==="robot"?.55:1;route(u,ux,uy,o.x,o.y,speed).then(()=>work(u,o,0,type))})}
+function assign(){units.forEach(u=>{if(u.dataset.busy==="1"||u.dataset.play==="1")return;let type=u.dataset.type,a=tasks.filter(t=>!t.busy);if(type==="plog")a=a.filter(t=>t.k==="trash");if(type==="robot")a=a.filter(t=>t.k==="grass");if(type==="sweep"){let leaf=a.filter(t=>t.k==="leaf");if(leaf.length)a=leaf}if(!a.length)return;let ux=parseFloat(u.style.left),uy=parseFloat(u.style.top);a.sort((p,q)=>Math.abs(p.y-uy)-Math.abs(q.y-uy));let o=a[0];o.busy=1;u.dataset.busy="1";let speed=type==="kid"?1.4:type==="plog"?1.6:type==="sweep"?.85:type==="robot"?.5:1;route(u,ux,uy,o.x,o.y,speed).then(()=>work(u,o,0,type))})}
 function spread(){tasks.filter(t=>!t.busy&&performance.now()-t.born>11000).forEach(o=>{o.e.classList.add("old");if(Math.random()<.16&&(o.k==="grass"||o.k==="trash"))spawn(o.k,o)})}
 function car(){if(!run||cars.length>4)return;let c=document.createElement("div");c.className="car";let lane=Math.random()<.5?44:56,start=Math.random()<.5?-50:W+50,end=start<0?W+50:-50;c.style.left=lane+"%";c.style.top=start+"px";world.append(c);cars.push(c);c.animate([{top:start+"px"},{top:end+"px"}],{duration:7500+Math.random()*1800,easing:"linear"}).onfinish=()=>{c.remove();cars=cars.filter(x=>x!==c)}}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");["tools","friends","machines"].forEach(x=>$("#"+x).classList.toggle("hide",x!==b.dataset.tab))});
-document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}pts-=prices[k];b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,cam+view.clientHeight*.72,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,cam+view.clientHeight*.72,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,cam+view.clientHeight*.72,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();assign()});
+document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}pts-=prices[k];b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,cam+view.clientHeight*.72,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,cam+view.clientHeight*.72,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,cam+view.clientHeight*.72,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();updateRacks(k);assign()});
 function reset(){ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};player.style.left="27%";player.style.top="2240px";camera(W-view.clientHeight);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.add("green"));hud()}
 function start(){reset();run=1;$("#ov").classList.add("hide");toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(spread,3400),setInterval(()=>{signalGreen=!signalGreen;signals.forEach(s=>s.e.classList.toggle("green",signalGreen))},5400),setInterval(car,2300))}
-function end(){run=0;ints.forEach(clearInterval);let clean=Math.max(0,100-tasks.length*5),team=Math.min(100,units.length*14),equip=Math.min(100,((inv.trash+inv.grass+inv.leaf+inv.poop-4)*14+machine*18)),action=Math.min(100,totalPts/18),diversity=new Set(units.map(u=>u.dataset.type)).size,strategy=Math.min(100,35+diversity*16+Math.min(30,equip*.3)),score=clean*.34+action*.2+team*.16+equip*.14+strategy*.16,rank=score>=88?"S":score>=75?"A":score>=60?"B":"C";$("#resultText").innerHTML=`累計 <b>${totalPts} GSpt</b> ／ 所持 ${pts} GSpt<br>残タスク ${tasks.length}件<br><br>🧹 CLEAN ${Math.round(clean)}<br>⚡ ACTION ${Math.round(action)}<br>🛠 EQUIPMENT ${Math.round(equip)}<br>🤝 TEAM ${Math.round(team)}<br>🧠 STRATEGY ${Math.round(strategy)}<br><br>Good Street Rank <b>${rank}</b>`;$("#ov").classList.remove("hide");$("#startCard").classList.add("hide");$("#result").classList.remove("hide")}
-$("#start").onclick=start;$("#again").onclick=start;let drag=0,sy=0,sc=0;view.onpointerdown=e=>{drag=1;sy=e.clientY;sc=cam};view.onpointermove=e=>{if(drag)camera(sc-(e.clientY-sy))};view.onpointerup=()=>drag=0;reset();
+function end(){
+ run=0;ints.forEach(clearInterval);
+ let clean=Math.max(0,100-tasks.length*5);
+ let team=Math.min(100,units.length*14);
+ let equip=Math.min(100,((inv.trash+inv.grass+inv.leaf+inv.poop-4)*14+machine*18));
+ let action=Math.min(100,totalPts/18);
+ let diversity=new Set(units.map(u=>u.dataset.type)).size;
+ let strategy=Math.min(100,35+diversity*16+Math.min(30,equip*.3));
+ let weighted=clean*.34+action*.20+team*.16+equip*.14+strategy*.16;
+ let finalScore=Math.round(weighted*100);
+ let rank=finalScore>=9000?"S":finalScore>=7800?"A":finalScore>=6500?"B":finalScore>=5000?"C":"D";
+ $("#resultText").innerHTML=
+ `<span style="font-size:12px;color:#aebbc4">GOOD STREET SCORE</span><br>
+ <b style="font-size:34px;color:#ffe66a">${finalScore.toLocaleString()} pt</b> / 10,000<br>
+ <span style="font-size:21px">RANK <b>${rank}</b></span><br><br>
+ 累計 <b>${totalPts} GSpt</b> ／ 所持 ${pts} GSpt<br>
+ 残タスク ${tasks.length}件<br><br>
+ 🧹 CLEAN ${Math.round(clean)}<br>
+ ⚡ ACTION ${Math.round(action)}<br>
+ 🛠 EQUIPMENT ${Math.round(equip)}<br>
+ 🤝 TEAM ${Math.round(team)}<br>
+ 🧠 STRATEGY ${Math.round(strategy)}`;
+ $("#ov").classList.remove("hide");$("#startCard").classList.add("hide");$("#result").classList.remove("hide")
+}
+$("#start").onclick=start;$("#again").onclick=start;let drag=0,sy=0,sc=0;view.onpointerdown=e=>{drag=1;sy=e.clientY;sc=cam};view.onpointermove=e=>{if(drag)camera(sc-(e.clientY-sy))};view.onpointerup=()=>drag=0;
+let lastTouchEnd=0;
+$("#app").addEventListener("touchend",e=>{
+ const now=Date.now();
+ if(now-lastTouchEnd<320)e.preventDefault();
+ lastTouchEnd=now;
+},{passive:false});
+reset();
 })();
 </script></body></html>
