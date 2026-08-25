@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Prototype 4.2.4</title>
+<title>Good Street Prototype 4.3.1</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
@@ -34,30 +34,103 @@ header{z-index:30;padding:8px 10px;background:#16232d;border-bottom:1px solid #f
 #toast{position:absolute;z-index:45;top:10px;left:50%;transform:translateX(-50%);padding:8px 11px;background:#101820eb;border-radius:9px;font-size:12px;font-weight:900;opacity:0;white-space:nowrap}.on{opacity:1!important}
 #comboFx{position:absolute;left:50%;top:24%;z-index:40;transform:translate(-50%,-50%);font-size:24px;font-weight:1000;text-align:center;opacity:0;text-shadow:0 4px #0008}.go{animation:combo .7s}@keyframes combo{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-70%) scale(1)}}
 footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;overflow:auto}.tabs{display:flex;gap:5px;margin-bottom:5px}.tab{flex:1;border:0;border-radius:8px;padding:5px;background:#283640;color:#b8c3ca;font-weight:900;font-size:11px}.tab.active{background:#4b6b58;color:#fff}.shop{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.buy{height:48px;border-radius:9px;border:1px solid #ffffff18;background:#222d36;color:#76848f;font-weight:900;font-size:11px;padding:3px}.buy span{display:block;font-size:9px;margin-top:2px}.buy.ready{color:#fff;background:#29452f;border-color:#6bd17f}.buy.armed{background:#4d7a40}
+
+#ov #result{touch-action:pan-y}
+#result{
+  height:calc(100% - 20px);
+  max-height:calc(100% - 20px);
+  overflow-y:scroll;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  touch-action:pan-y;
+  padding-bottom:28px;
+}
+#result *{touch-action:auto}
+#result button{touch-action:manipulation}
+#result details,#result pre{touch-action:pan-y}
+
 #ov{position:fixed;inset:0;z-index:80;background:#071019df;display:grid;place-items:center;padding:18px}.card{width:min(430px,100%);background:#1a2933;border-radius:20px;padding:22px;text-align:center}.card p{line-height:1.6;color:#d5dfe5;font-size:14px}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#72e288;font-weight:1000;font-size:18px;margin-top:8px;margin-bottom:4px}.hide{display:none!important}
+
+/* === Prototype 4.3.1 : one-screen fixed field === */
+#app{
+  height:100dvh;
+  max-width:500px;
+  grid-template-rows:74px minmax(0,1fr) 112px;
+}
+header{padding:5px 8px}
+#view{overflow:hidden;touch-action:manipulation}
+#world{
+  width:100%;
+  height:100%;
+  transform:none!important;
+  overflow:hidden;
+}
+.build{height:100%;bottom:auto}
+.walk{height:100%;bottom:auto}
+.road{height:100%;bottom:auto}
+.plant{height:5.2%;min-height:25px}
+.tree{width:18px;height:18px}
+.cross{height:3.4%;min-height:18px}
+.signal{width:13px;height:31px}
+.car{width:17px;height:30px}
+.task{width:25px;height:25px;font-size:14px;border-radius:7px}
+#player{width:34px;height:34px;font-size:18px}
+.kid{width:25px;height:25px;font-size:13px}
+.plog,.sweep{width:29px;height:29px;font-size:16px}
+.robot{width:30px;height:30px;font-size:17px}
+.statusRack{top:8px;transform:scale(.88);transform-origin:top}
+.statusRack.left{left:3px}.statusRack.right{right:3px}
+footer{padding:4px 5px}
+.tabs{margin-bottom:4px}
+.tab{padding:4px;font-size:10px}
+.shop{grid-template-columns:repeat(4,1fr);gap:4px}
+#friends.shop{grid-template-columns:repeat(3,1fr)}
+#machines.shop{grid-template-columns:repeat(2,1fr)}
+.buy{height:40px;font-size:9px;border-radius:7px}
+.buy span{font-size:8px;margin-top:1px}
+#comboFx{top:18%}
+@media (max-height:700px){
+ #app{grid-template-rows:66px minmax(0,1fr) 102px}
+ .buy{height:36px}
+ .statusRack{transform:scale(.78)}
+}
+
+
+#fireBox{position:absolute;left:50%;bottom:7px;transform:translateX(-50%);z-index:48;width:46%;max-width:210px;text-align:center;pointer-events:auto}
+#fireBtn{width:100%;border:2px solid #ffffff55;border-radius:12px;background:#2b3035;color:#9ca7ad;padding:5px 6px;font-weight:1000;font-size:10px;box-shadow:0 3px #0005}
+#fireBtn.ready{background:#d85b24;color:#fff;border-color:#ffd066;animation:fireReady .65s alternate infinite}
+#fireBtn.active{background:#ff7a22;color:#fff;border-color:#fff1a5;animation:firePulse .35s alternate infinite}
+#fireTrack{height:7px;background:#20282e;border-radius:99px;overflow:hidden;margin-top:3px;border:1px solid #ffffff35}
+#fireFill{height:100%;width:0%;background:linear-gradient(90deg,#ffb12b,#ff5524);transition:width .18s}
+@keyframes fireReady{to{transform:scale(1.04);box-shadow:0 0 13px #ff7b2f}}
+@keyframes firePulse{to{transform:scale(1.06);box-shadow:0 0 18px #ffb02f}}
+#view.fireMode:after{content:"🔥 GOOD STREET FIRE!! 🔥";position:absolute;inset:0;z-index:42;pointer-events:none;display:grid;place-items:center;font-size:22px;font-weight:1000;color:#fff3a4;text-shadow:0 3px #b42d00,0 0 15px #ff6b1f;background:radial-gradient(circle,transparent 45%,#ff5a181c);animation:fireOverlay .65s alternate infinite}
+@keyframes fireOverlay{to{opacity:.62}}
+
 </style></head>
 <body><div id="app"><header><div class="top"><div id="time" class="time">02:00</div><div id="season" class="season">🌸 春</div><div id="pts" class="pts">0 GSpt</div></div><div class="sub"><span id="status">タスクをタップ！</span><span id="combo">COMBO 0</span></div></header>
-<main id="view"><div id="world"><div class="build bl"></div><div class="build br"></div><div class="walk wl"></div><div class="walk wr"></div><div class="road"></div></div><div id="comboFx"></div><div id="toast"></div>
+<main id="view"><div id="world"><div class="build bl"></div><div class="build br"></div><div class="walk wl"></div><div class="walk wr"></div><div class="road"></div></div><div id="comboFx"></div><div id="toast"></div><div id="fireBox"><button id="fireBtn">🔥 GOOD STREET FIRE <span id="firePct">0%</span></button><div id="fireTrack"><div id="fireFill"></div></div></div>
 <div id="gearRack" class="statusRack left"><div class="ttl">GEAR</div>
 <div class="row" data-stat="trash">🗑 <small>1</small></div>
 <div class="row" data-stat="grass">🌿 <small>1</small></div>
 <div class="row" data-stat="leaf">🍂 <small>1</small></div>
 <div class="row" data-stat="poop">💩 <small>1</small></div>
-<div class="row" data-stat="boost">⚙️ <small>0</small></div>
-<div class="row" data-stat="robot">🤖 <small>0</small></div></div>
+
+</div>
 <div id="teamRack" class="statusRack right"><div class="ttl">TEAM</div>
 <div class="row" data-stat="kids">👦👧👦 <small>0</small></div>
 <div class="row" data-stat="plog">🏃 <small>0</small></div>
-<div class="row" data-stat="sweep">🧹 <small>0</small></div></div>
+<div class="row" data-stat="sweep">🧹 <small>0</small></div><div class="row" data-stat="robot">🤖 <small>0</small></div></div>
 </main>
-<footer><div class="tabs"><button class="tab active" data-tab="tools">道具</button><button class="tab" data-tab="friends">仲間</button><button class="tab" data-tab="machines">機材</button></div>
+<footer><div class="tabs"><button class="tab active" data-tab="tools">道具</button><button class="tab" data-tab="friends">仲間</button><button class="tab" data-tab="machines">その他</button></div>
 <div class="shop" id="tools">
 <button class="buy" data-buy="trash">🗑 トング ×<b>1</b><span>70 GSpt</span></button><button class="buy" data-buy="grass">🌿 鎌 ×<b>1</b><span>70 GSpt</span></button><button class="buy" data-buy="leaf">🍂 竹ぼうき ×<b>1</b><span>80 GSpt</span></button><button class="buy" data-buy="poop">💩 ブラシ ×<b>1</b><span>90 GSpt</span></button>
 </div>
 <div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・作業遅め</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>320 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>300 GSpt｜落ち葉のプロ</span></button></div>
-<div class="shop hide" id="machines"><button class="buy" data-buy="robot">🤖 草刈りロボ<span>420 GSpt｜範囲草刈り</span></button><button class="buy" data-buy="boost">⚙ 機材強化 Lv<b>0</b><span>400 GSpt</span></button></div>
+<div class="shop hide" id="machines"><div style="grid-column:1/-1;text-align:center;font-size:10px;color:#8fa0aa;padding:10px">機材枠は準備中</div></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.2.4</h2><p>4.2は移動と採点を更新。後半ほどタスクが増えます。<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.3.1</h2><p>4.3.1は🔥Good Street FIRE搭載！ゲージMAXで9秒間、全員の移動＆作業が爆速。子供は草刈り不可。<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 8px">
 <button id="copyLog" type="button" style="padding:11px;border-radius:10px;border:1px solid #ffffff22;background:#315d3b;color:white;font-weight:900">📋 ログをコピー</button>
 <button id="saveLog" type="button" style="padding:11px;border-radius:10px;border:1px solid #ffffff22;background:#26343e;color:white;font-weight:900">JSON保存</button>
@@ -69,21 +142,45 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 <button id="again" class="primary">もう一度</button></div></div>
 <script>
 (()=>{
-const $=s=>document.querySelector(s), world=$("#world"),view=$("#view"),W=2500,D=120;
+const $=s=>document.querySelector(s), world=$("#world"),view=$("#view"),W=1000,D=120;
 const C={trash:["🗑️",1900,32],grass:["🌿",2600,40],leaf:["🍂",2300,36],poop:["💩",3000,48]}, SE=[["🌸","春"],["☀️","夏"],["🍁","秋"],["❄️","冬"]];
-const crossings=[760,1640],plants=[],trees=[],signals=[]; let run=0,left=D,pts=0,totalPts=0,combo=0,last=0,cam=0,busy=0,tasks=[],units=[],cars=[],season=0,machine=0,armed=null,ints=[];
+const crossings=[315,690],plants=[],trees=[],signals=[]; let run=0,left=D,pts=0,totalPts=0,combo=0,last=0,cam=0,busy=0,tasks=[],units=[],cars=[],season=0,machine=0,armed=null,ints=[];
 let playLog=null,lastLogJson="";
+let fire=0,fireActive=false,fireTimer=null;
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};
-function clamp(v,a,b){return Math.max(a,Math.min(b,v))} function side(x){return x<50?"L":"R"} function camera(y){cam=clamp(y,0,W-view.clientHeight);world.style.transform=`translateY(${-cam}px)`}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function setY(el,y){el.style.top=(y/W*100)+"%"}function getY(el){let t=parseFloat(el.style.top)||0;return t/100*W} function side(x){return x<50?"L":"R"} function camera(y){cam=0;world.style.transform="none"}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"4.2.4",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"4.3.1",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
 function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;return JSON.stringify({...playLog,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length}},null,2)}
+
+
+function fireHud(){
+ const pct=Math.round(fire);
+ $("#fireFill").style.width=pct+"%";$("#firePct").textContent=pct+"%";
+ const b=$("#fireBtn");b.classList.toggle("ready",fire>=100&&!fireActive);b.classList.toggle("active",fireActive);
+ b.disabled=!run||fire<100||fireActive;
+}
+function addFire(n,why=""){
+ if(!run||fireActive)return;
+ fire=clamp(fire+n,0,100);fireHud();
+ if(fire>=100)toast("🔥 GOOD STREET FIRE 準備OK！");
+}
+function activateFire(){
+ if(!run||fire<100||fireActive)return;
+ fire=0;fireActive=true;fireHud();$("#view").classList.add("fireMode");
+ toast("🔥 GOOD STREET FIRE!!");
+ if(playLog)evt("fire_start");
+ clearTimeout(fireTimer);fireTimer=setTimeout(()=>{
+  fireActive=false;$("#view").classList.remove("fireMode");fireHud();toast("FIRE終了！");
+  if(playLog)evt("fire_end");
+ },9000);
+}
 
 function countUnits(type){return units.filter(u=>u.dataset.type===type).length}
 function updateRacks(flashKey=null){
  const vals={
-  trash:inv.trash,grass:inv.grass,leaf:inv.leaf,poop:inv.poop,boost:machine,
+  trash:inv.trash,grass:inv.grass,leaf:inv.leaf,poop:inv.poop,
   robot:countUnits("robot"),kids:Math.ceil(countUnits("kid")/3),
   plog:countUnits("plog"),sweep:countUnits("sweep")
  };
@@ -97,20 +194,37 @@ function updateRacks(flashKey=null){
   if(row){const rack=row.closest(".statusRack");rack.classList.remove("flash");void rack.offsetWidth;rack.classList.add("flash")}
  }
 }
-function setup(){for(let y=120;y<W;y+=175){[35,65].forEach((x,j)=>{let p=document.createElement("div");p.className="plant";p.style.left=(j?62:29)+"%";p.style.top=(y-42)+"px";world.append(p);plants.push({x,y,side:j?"R":"L"});let t=document.createElement("div");t.className="tree";t.style.left=x+"%";t.style.top=y+"px";world.append(t);trees.push({x,y})})}
-crossings.forEach((y,i)=>{let c=document.createElement("div");c.className="cross";c.style.top=(y-26)+"px";world.append(c);if(i===0)[37,63].forEach(x=>{let s=document.createElement("div");s.className="signal green";s.style.left=x+"%";s.style.top=(y-35)+"px";world.append(s);signals.push({x,y:y-35,e:s})})})}setup();
-const player=document.createElement("div");player.className="e unit";player.id="player";player.innerHTML='🦺<span class="you">YOU</span>';player.style.left="27%";player.style.top="2240px";world.append(player);
+function setup(){
+ for(let y=70;y<W-40;y+=92){
+  [35,65].forEach((x,j)=>{
+   let p=document.createElement("div");p.className="plant";
+   p.style.left=(j?62:29)+"%";p.style.top=((y-27)/W*100)+"%";
+   world.append(p);plants.push({x,y,side:j?"R":"L"});
+   let t=document.createElement("div");t.className="tree";t.style.left=x+"%";t.style.top=(y/W*100)+"%";
+   world.append(t);trees.push({x,y})
+  })
+ }
+ crossings.forEach((y,i)=>{
+  let c=document.createElement("div");c.className="cross";c.style.top=((y-17)/W*100)+"%";world.append(c);
+  if(i===0)[37,63].forEach(x=>{
+   let s=document.createElement("div");s.className="signal green";s.style.left=x+"%";s.style.top=((y-22)/W*100)+"%";
+   world.append(s);signals.push({x,y:y-22,e:s})
+  })
+ })
+}setup();
+const player=document.createElement("div");player.className="e unit";player.id="player";player.innerHTML='🦺<span class="you">YOU</span>';player.style.left="27%";setY(player,900);world.append(player);
 function hud(){let m=Math.floor(left/60),s=String(left%60).padStart(2,"0");$("#time").textContent=`${String(m).padStart(2,"0")}:${s}`;$("#pts").innerHTML=pts+" GSpt<br><small style=\"font-size:9px;color:#b9c5cc\">TOTAL "+totalPts+"</small>";$("#combo").textContent="COMBO "+combo;document.querySelectorAll(".buy").forEach(b=>{let k=b.dataset.buy;b.classList.toggle("ready",run&&pts>=prices[k]);let sp=b.querySelector("span");if(["trash","grass","leaf","poop"].includes(k))sp.textContent=prices[k]+" GSpt";if(k==="boost"){b.querySelector("b").textContent=machine;sp.textContent=prices[k]+" GSpt"}});updateRacks()}
 let signalGreen=true;function toggleSignal(){signalGreen=!signalGreen;signals.forEach(s=>s.e.classList.toggle("green",signalGreen))}
 function move(el,x,y,speed=1){
  return new Promise(r=>{
-  const fx=parseFloat(el.style.left)||x, fy=parseFloat(el.style.top)||y;
-  const dx=((x-fx)/100)*view.clientWidth, dy=y-fy;
+  const fx=parseFloat(el.style.left)||x, fy=getY(el);
+  const dx=((x-fx)/100)*view.clientWidth;
+  const dy=((y-fy)/W)*view.clientHeight;
   const dist=Math.hypot(dx,dy);
-  const basePxPerSec=175;
-  const duration=clamp(dist/(basePxPerSec*speed),.24,3.4);
+  const basePxPerSec=115*(fireActive?1.65:1);
+  const duration=clamp(dist/(basePxPerSec*speed),.22,3.2);
   el.style.transitionDuration=duration+"s";
-  el.style.left=x+"%";el.style.top=y+"px";
+  el.style.left=x+"%";setY(el,y);
   setTimeout(r,duration*1000+25);
  })
 }
@@ -119,25 +233,25 @@ function kind(){let r=Math.random();if(season===1)return r<.58?"grass":r<.78?"tr
 function spawn(k=kind(),near=null){if(!run||tasks.length>32)return;let x,y;if(near){x=clamp(near.x+(Math.random()-.5)*5,20,80);y=clamp(near.y+(Math.random()-.5)*70,60,W-60)}
 else if(k==="grass"){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*5;y=z.y+(Math.random()-.5)*52}
 else if(k==="poop"){let a=Math.random()<.8?trees:signals,z=a[Math.floor(Math.random()*a.length)];x=z.x+(Math.random()-.5)*4;y=z.y+14+Math.random()*24}
-else if(k==="trash"){if(Math.random()<.65){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*6;y=z.y+(Math.random()-.5)*55}else{x=Math.random()<.5?23+Math.random()*12:65+Math.random()*12;y=70+Math.random()*(W-140)}}
-else{x=Math.random()<.5?21+Math.random()*16:63+Math.random()*16;y=70+Math.random()*(W-140)}
-if(tasks.some(t=>Math.hypot((t.x-x)*5,(t.y-y)/10)<13))return;let e=document.createElement("div");e.className="e task";e.textContent=C[k][0];e.style.left=x+"%";e.style.top=y+"px";let o={k,x,y,e,born:performance.now(),busy:0};e.onclick=ev=>{ev.stopPropagation();select(o)};world.append(e);tasks.push(o);if(playLog){playLog.tasks.spawned[k]++;playLog.tasks.spawned.total++;playLog.tasks.maxConcurrent=Math.max(playLog.tasks.maxConcurrent,tasks.length);evt("spawn",{task:k})}}
-function select(o){if(!run||busy||o.busy)return;busy=1;o.busy=1;$("#status").textContent="移動中…";route(player,parseFloat(player.style.left),parseFloat(player.style.top),o.x,o.y,1,1).then(()=>work(player,o,1,"player"))}
+else if(k==="trash"){if(Math.random()<.65){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*6;y=z.y+(Math.random()-.5)*55}else{x=Math.random()<.5?23+Math.random()*12:65+Math.random()*12;y=35+Math.random()*(W-70)}}
+else{x=Math.random()<.5?21+Math.random()*16:63+Math.random()*16;y=35+Math.random()*(W-70)}
+if(tasks.some(t=>Math.hypot((t.x-x)*5,(t.y-y)/10)<13))return;let e=document.createElement("div");e.className="e task";e.textContent=C[k][0];e.style.left=x+"%";setY(e,y);let o={k,x,y,e,born:performance.now(),busy:0};e.onclick=ev=>{ev.stopPropagation();select(o)};world.append(e);tasks.push(o);if(playLog){playLog.tasks.spawned[k]++;playLog.tasks.spawned.total++;playLog.tasks.maxConcurrent=Math.max(playLog.tasks.maxConcurrent,tasks.length);evt("spawn",{task:k})}}
+function select(o){if(!run||busy||o.busy)return;busy=1;o.busy=1;$("#status").textContent="移動中…";route(player,parseFloat(player.style.left),getY(player),o.x,o.y,1,1).then(()=>work(player,o,1,"player"))}
 function work(el,o,isP,type){if(!run||!o.e.isConnected){if(isP)busy=0;return}$("#status").textContent=isP?"清掃中…":$("#status").textContent;let p=document.createElement("div");p.className="prog";p.innerHTML="<i></i>";el.append(p);let base=C[o.k][1],mult=1;if(type==="kid")mult=1.55;if(type==="plog")mult=o.k==="trash"?.12:99;if(type==="sweep")mult=o.k==="leaf"?.18:(o.k==="trash"?.9:1.8);if(type==="robot")mult=o.k==="grass"?.45:99;if(mult>20){p.remove();o.busy=0;if(!isP)el.dataset.busy="0";return}let dur=Math.max(280,base*mult/(1+(inv[o.k]-1)*.25)/(1+machine*.18)),st=performance.now();function f(n){if(!run){p.remove();return}let q=clamp((n-st)/dur,0,1);p.firstChild.style.width=q*100+"%";if(q<1)requestAnimationFrame(f);else{p.remove();clearTask(o,isP,el,type)}}requestAnimationFrame(f)}
-function clearTask(o,isP,el,type){if(!o.e.isConnected)return;let now=performance.now(),age=(now-o.born)/1000,f=age<8?1:age<18?.8:age<30?.55:.35,earn=Math.max(8,Math.round(C[o.k][2]*f));combo=now-last<4300?combo+1:1;last=now;earn=Math.round(earn*(1+Math.min(combo-1,8)*.04));pts+=earn;totalPts+=earn;if(playLog){playLog.tasks.cleared[o.k]++;playLog.tasks.cleared.total++;playLog.tasks.ages.push(+age.toFixed(1));playLog.actors[type]++;playLog.maxCombo=Math.max(playLog.maxCombo,combo);if((type==="plog"&&o.k==="trash")||(type==="sweep"&&o.k==="leaf")||(type==="robot"&&o.k==="grass"))playLog.goodMatch++;evt("clear",{task:o.k,actor:type,age:+age.toFixed(1),gspt:earn,combo})}spark(o.x,o.y,earn);o.e.remove();tasks=tasks.filter(t=>t!==o);if(type==="robot"&&o.k==="grass"){let nearby=tasks.filter(t=>t.k==="grass"&&Math.abs(t.y-o.y)<120&&Math.abs(t.x-o.x)<9).slice(0,4);nearby.forEach((t,i)=>setTimeout(()=>{if(t.e.isConnected){pts+=Math.round(C.grass[2]*.45);totalPts+=Math.round(C.grass[2]*.45);spark(t.x,t.y,Math.round(C.grass[2]*.45));t.e.remove();tasks=tasks.filter(q=>q!==t);hud()}},100+i*90))}
+function clearTask(o,isP,el,type){if(!o.e.isConnected)return;let now=performance.now(),age=(now-o.born)/1000,f=age<8?1:age<18?.8:age<30?.55:.35,earn=Math.max(8,Math.round(C[o.k][2]*f));combo=now-last<4300?combo+1:1;last=now;earn=Math.round(earn*(1+Math.min(combo-1,8)*.04));pts+=earn;totalPts+=earn;addFire(5+(combo>=3?2:0)+(((type==="plog"&&o.k==="trash")||(type==="sweep"&&o.k==="leaf")||(type==="robot"&&o.k==="grass"))?5:0));if(playLog){playLog.tasks.cleared[o.k]++;playLog.tasks.cleared.total++;playLog.tasks.ages.push(+age.toFixed(1));playLog.actors[type]++;playLog.maxCombo=Math.max(playLog.maxCombo,combo);if((type==="plog"&&o.k==="trash")||(type==="sweep"&&o.k==="leaf")||(type==="robot"&&o.k==="grass"))playLog.goodMatch++;evt("clear",{task:o.k,actor:type,age:+age.toFixed(1),gspt:earn,combo})}spark(o.x,o.y,earn);o.e.remove();tasks=tasks.filter(t=>t!==o);if(type==="robot"&&o.k==="grass"){let nearby=tasks.filter(t=>t.k==="grass"&&Math.abs(t.y-o.y)<120&&Math.abs(t.x-o.x)<9).slice(0,4);nearby.forEach((t,i)=>setTimeout(()=>{if(t.e.isConnected){pts+=Math.round(C.grass[2]*.45);totalPts+=Math.round(C.grass[2]*.45);spark(t.x,t.y,Math.round(C.grass[2]*.45));t.e.remove();tasks=tasks.filter(q=>q!==t);hud()}},100+i*90))}
 if(isP){busy=0;$("#status").textContent="次のタスクをタップ！"}else el.dataset.busy="0";comboFx();hud();setTimeout(assign,80)}
-function spark(x,y,n){["✦","✨","✦"].forEach((q,i)=>{let s=document.createElement("div");s.className="spark";s.textContent=q;s.style.left=(x+(i-1)*2)+"%";s.style.top=(y+(i-1)*5)+"px";world.append(s);setTimeout(()=>s.remove(),650)});let z=document.createElement("div");z.className="score";z.textContent="+"+n+" GSpt";z.style.left=x+"%";z.style.top=(y-16)+"px";world.append(z);setTimeout(()=>z.remove(),900)}
+function spark(x,y,n){["✦","✨","✦"].forEach((q,i)=>{let s=document.createElement("div");s.className="spark";s.textContent=q;s.style.left=(x+(i-1)*2)+"%";s.style.top=((y+(i-1)*5)/W*100)+"%";world.append(s);setTimeout(()=>s.remove(),650)});let z=document.createElement("div");z.className="score";z.textContent="+"+n+" GSpt";z.style.left=x+"%";z.style.top=((y-16)/W*100)+"%";world.append(z);setTimeout(()=>z.remove(),900)}
 function comboFx(){if(combo<2)return;let c=$("#comboFx");c.innerHTML=(combo>=8?"AMAZING!":combo>=5?"GREAT!":"GOOD!")+"<br>"+combo+" COMBO";c.classList.remove("go");void c.offsetWidth;c.classList.add("go")}
-function makeUnit(type,x,y,ico){let u=document.createElement("div");u.className="e unit "+type;u.textContent=ico;u.style.left=x+"%";u.style.top=y+"px";u.dataset.type=type;u.dataset.busy="0";u.dataset.play="0";world.append(u);units.push(u);
+function makeUnit(type,x,y,ico){let u=document.createElement("div");u.className="e unit "+type;u.textContent=ico;u.style.left=x+"%";setY(u,y);u.dataset.type=type;u.dataset.busy="0";u.dataset.play="0";world.append(u);units.push(u);
 if(type==="kid"){u.playTimer=setInterval(()=>{if(!run||u.dataset.busy==="1"||u.dataset.play==="1")return;u.dataset.play="1";let old=u.textContent;u.textContent=["⚽","🪲","👹"][Math.floor(Math.random()*3)];setTimeout(()=>{if(u.isConnected){u.textContent=old;u.dataset.play="0";assign()}},5000+Math.random()*3000)},15000+Math.random()*7000)}
 return u}
-function buyKids(){[0,1,2].forEach(i=>makeUnit("kid",25+i*3,cam+view.clientHeight*.72+i*18,["👦","👧","👦"][i]));toast("👦👧👦 子供3人組が参加！")}
-function assign(){units.forEach(u=>{if(u.dataset.busy==="1"||u.dataset.play==="1")return;let type=u.dataset.type,a=tasks.filter(t=>!t.busy);if(type==="plog")a=a.filter(t=>t.k==="trash");if(type==="robot")a=a.filter(t=>t.k==="grass");if(type==="sweep"){let leaf=a.filter(t=>t.k==="leaf");if(leaf.length)a=leaf}if(!a.length)return;let ux=parseFloat(u.style.left),uy=parseFloat(u.style.top);a.sort((p,q)=>Math.abs(p.y-uy)-Math.abs(q.y-uy));let o=a[0];o.busy=1;u.dataset.busy="1";let speed=type==="kid"?1.4:type==="plog"?1.6:type==="sweep"?.85:type==="robot"?.5:1;route(u,ux,uy,o.x,o.y,speed).then(()=>work(u,o,0,type))})}
+function buyKids(){[0,1,2].forEach(i=>makeUnit("kid",25+i*3,820+i*18,["👦","👧","👦"][i]));toast("👦👧👦 子供3人組が参加！")}
+function assign(){units.forEach(u=>{if(u.dataset.busy==="1"||u.dataset.play==="1")return;let type=u.dataset.type,a=tasks.filter(t=>!t.busy);if(type==="kid")a=a.filter(t=>t.k!=="grass");if(type==="plog")a=a.filter(t=>t.k==="trash");if(type==="robot")a=a.filter(t=>t.k==="grass");if(type==="sweep"){let leaf=a.filter(t=>t.k==="leaf");if(leaf.length)a=leaf}if(!a.length)return;let ux=parseFloat(u.style.left),uy=getY(u);a.sort((p,q)=>Math.abs(p.y-uy)-Math.abs(q.y-uy));let o=a[0];o.busy=1;u.dataset.busy="1";let speed=type==="kid"?1.4:type==="plog"?1.6:type==="sweep"?.85:type==="robot"?.5:1;route(u,ux,uy,o.x,o.y,speed).then(()=>work(u,o,0,type))})}
 function spread(){tasks.filter(t=>!t.busy&&performance.now()-t.born>11000).forEach(o=>{o.e.classList.add("old");if(Math.random()<.16&&(o.k==="grass"||o.k==="trash"))spawn(o.k,o)})}
-function car(){if(!run||cars.length>4)return;let c=document.createElement("div");c.className="car";let lane=Math.random()<.5?44:56,start=Math.random()<.5?-50:W+50,end=start<0?W+50:-50;c.style.left=lane+"%";c.style.top=start+"px";world.append(c);cars.push(c);c.animate([{top:start+"px"},{top:end+"px"}],{duration:7500+Math.random()*1800,easing:"linear"}).onfinish=()=>{c.remove();cars=cars.filter(x=>x!==c)}}
+function car(){if(!run||cars.length>4)return;let c=document.createElement("div");c.className="car";let lane=Math.random()<.5?44:56,start=Math.random()<.5?-50:W+50,end=start<0?W+50:-50;c.style.left=lane+"%";setY(c,start);world.append(c);cars.push(c);c.animate([{top:start+"px"},{top:end+"px"}],{duration:7500+Math.random()*1800,easing:"linear"}).onfinish=()=>{c.remove();cars=cars.filter(x=>x!==c)}}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");["tools","friends","machines"].forEach(x=>$("#"+x).classList.toggle("hide",x!==b.dataset.tab))});
-document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}let paid=prices[k];pts-=paid;if(playLog){playLog.gspt.spent+=paid;playLog.purchases.push({t:D-left,item:k,cost:paid,season});evt("purchase",{item:k,cost:paid})}b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,cam+view.clientHeight*.72,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,cam+view.clientHeight*.72,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,cam+view.clientHeight*.72,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();updateRacks(k);assign()});
-function reset(){ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};player.style.left="27%";player.style.top="2240px";camera(W-view.clientHeight);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.add("green"));hud()}
+document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}let paid=prices[k];pts-=paid;if(playLog){playLog.gspt.spent+=paid;playLog.purchases.push({t:D-left,item:k,cost:paid,season});evt("purchase",{item:k,cost:paid})}b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,820,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,820,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,820,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();updateRacks(k);assign()});
+function reset(){ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;fire=0;fireActive=false;clearTimeout(fireTimer);$("#view").classList.remove("fireMode");fireHud();left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};player.style.left="27%";setY(player,900);camera(0);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.add("green"));hud()}
 function start(){reset();playLog=initLog();run=1;$("#ov").classList.add("hide");evt("game_start");toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(spread,3400),setInterval(()=>{signalGreen=!signalGreen;signals.forEach(s=>s.e.classList.toggle("green",signalGreen))},5400),setInterval(car,2300))}
 function end(){
  run=0;ints.forEach(clearInterval);
@@ -164,13 +278,14 @@ function end(){
  if(playLog){playLog.endedAt=new Date().toISOString();playLog.score=finalScore;playLog.rank=rank;playLog.gspt.earned=totalPts;playLog.gspt.remaining=pts;playLog.finalAxes={clean:Math.round(clean),action:Math.round(action),equipment:Math.round(equip),team:Math.round(team),strategy:Math.round(strategy)};["trash","grass","leaf","poop"].forEach(k=>playLog.tasks.remaining[k]=tasks.filter(t=>t.k===k).length);playLog.tasks.remaining.total=tasks.length;evt("game_end",{score:finalScore,rank});lastLogJson=logText();$("#logPreview").textContent=lastLogJson;}
  $("#ov").classList.remove("hide");$("#startCard").classList.add("hide");$("#result").classList.remove("hide")
 }
-$("#start").onclick=start;$("#again").onclick=start;let drag=0,sy=0,sc=0;view.onpointerdown=e=>{drag=1;sy=e.clientY;sc=cam};view.onpointermove=e=>{if(drag)camera(sc-(e.clientY-sy))};view.onpointerup=()=>drag=0;
+$("#start").onclick=start;$("#again").onclick=start;/* 4.3 fixed field: no map scrolling */
 let lastTouchEnd=0;
 $("#app").addEventListener("touchend",e=>{
  const now=Date.now();
  if(now-lastTouchEnd<320)e.preventDefault();
  lastTouchEnd=now;
 },{passive:false});
+$("#fireBtn").onclick=activateFire;
 $("#copyLog").onclick=async()=>{if(!lastLogJson){toast("ログがありません");return}let ok=false;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(lastLogJson);ok=true}}catch(e){}if(!ok){try{let ta=document.createElement("textarea");ta.value=lastLogJson;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);ok=document.execCommand("copy");ta.remove()}catch(e){}}if(ok){toast("📋 プレイログをコピーしました！");let b=$("#copyLog"),old=b.textContent;b.textContent="✓ コピー済み";setTimeout(()=>b.textContent=old,1400)}else{let pre=$("#logPreview"),range=document.createRange();range.selectNodeContents(pre);let sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);toast("選択したログを長押ししてコピーしてね")}};
 $("#saveLog").onclick=()=>{if(!lastLogJson)return;let blob=new Blob([lastLogJson],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="good-street-playlog.json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 reset();
