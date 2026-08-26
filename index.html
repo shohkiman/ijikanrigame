@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Ver. 5.1.16b WHITE MODEL</title>
+<title>Good Street Ver. 5.2 WHITE MODEL</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
@@ -52,7 +52,7 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 
 #ov{position:fixed;inset:0;z-index:80;background:#071019df;display:grid;place-items:center;padding:18px}.card{width:min(430px,100%);background:#1a2933;border-radius:20px;padding:22px;text-align:center}.card p{line-height:1.6;color:#d5dfe5;font-size:14px}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#72e288;font-weight:1000;font-size:18px;margin-top:8px;margin-bottom:4px}.hide{display:none!important}
 
-/* === Ver. 5.1.16b WHITE MODEL : one-screen fixed field === */
+/* === Ver. 5.2 WHITE MODEL : one-screen fixed field === */
 #app{
   height:100dvh;
   max-width:500px;
@@ -304,10 +304,10 @@ header #fireTrack{
 <div class="shop" id="tools">
 <button class="buy" data-buy="trash">🗑 トング ×<b>1</b><span>70 GSpt</span></button><button class="buy" data-buy="grass">🌿 鎌 ×<b>1</b><span>70 GSpt</span></button><button class="buy" data-buy="leaf">🍂 竹ぼうき ×<b>1</b><span>80 GSpt</span></button><button class="buy" data-buy="poop">💩 ブラシ ×<b>1</b><span>90 GSpt</span></button>
 </div>
-<div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・遊ぶ</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>320 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>300 GSpt｜落ち葉のプロ</span></button><button class="buy" data-buy="robot">🤖 草刈りロボ<span>420 GSpt｜草専用・範囲処理</span></button></div>
+<div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・遊ぶ</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>290 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>270 GSpt｜落ち葉のプロ</span></button><button class="buy" data-buy="robot">🤖 草刈りロボ<span>380 GSpt｜草専用・範囲処理</span></button></div>
 <div class="shop hide" id="machines"><div style="grid-column:1/-1;text-align:center;font-size:10px;color:#8fa0aa;padding:10px">機材枠は準備中</div></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.1.16b WHITE MODEL</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.2 WHITE MODEL</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 8px">
 
 
@@ -331,10 +331,10 @@ const crossingDefs=[{y:170,signalized:false},{y:475,signalized:true},{y:745,sign
 let playLog=null,lastLogJson="";
 let fire=0,fireActive=false,fireTimer=null;
 let paused=false,cutinActive=false,fireCount=0,resultSent=false,currentPlayer="",crossingBusy=[0,0,0];
-let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};
+let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:290,sweep:270,robot:380,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function setY(el,y){el.style.top=(y/W*100)+"%"}function getY(el){let t=parseFloat(el.style.top)||0;return t/100*W} function side(x){return x<50?"L":"R"} function camera(y){cam=0;world.style.transform="none"}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"5.1.16b-white",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"5.2-white",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
 function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;return JSON.stringify({...playLog,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length}},null,2)}
 
@@ -527,7 +527,7 @@ if(isP){busy=0;$("#status").textContent="次のタスクをタップ！"}else el
 function spark(x,y,n){["✦","✨","✦"].forEach((q,i)=>{let s=document.createElement("div");s.className="spark";s.textContent=q;s.style.left=(x+(i-1)*2)+"%";s.style.top=((y+(i-1)*5)/W*100)+"%";world.append(s);setTimeout(()=>s.remove(),650)});let z=document.createElement("div");z.className="score";z.textContent="+"+n+" GSpt";z.style.left=x+"%";z.style.top=((y-16)/W*100)+"%";world.append(z);setTimeout(()=>z.remove(),900)}
 function comboFx(){if(combo<2)return;let c=$("#comboFx");c.innerHTML=(combo>=8?"AMAZING!":combo>=5?"GREAT!":"GOOD!")+"<br>"+combo+" COMBO";c.classList.remove("go");void c.offsetWidth;c.classList.add("go")}
 function makeUnit(type,x,y,ico){let u=document.createElement("div");u.className="e unit "+type;u.textContent=ico;u.style.left=x+"%";setY(u,y);u.dataset.type=type;u.dataset.busy="0";u.dataset.play="0";world.append(u);units.push(u);
-if(type==="kid"){u.playTimer=setInterval(()=>{if(!run||u.dataset.busy==="1"||u.dataset.play==="1")return;u.dataset.play="1";let old=u.textContent;u.textContent=["⚽","🪲","👹"][Math.floor(Math.random()*3)];setTimeout(()=>{if(u.isConnected){u.textContent=old;u.dataset.play="0";assign()}},5000+Math.random()*3000)},15000+Math.random()*7000)}
+if(type==="kid"){u.playTimer=setInterval(()=>{if(!run||u.dataset.busy==="1"||u.dataset.play==="1")return;u.dataset.play="1";let old=u.textContent;u.textContent=["⚽","🪲","👹"][Math.floor(Math.random()*3)];setTimeout(()=>{if(u.isConnected){u.textContent=old;u.dataset.play="0";assign()}},6000+Math.random()*3000)},11000+Math.random()*5000)}
 return u}
 function buyKids(){[0,1,2].forEach(i=>makeUnit("kid",25+i*3,820+i*18,["👦","👧","👦"][i]));toast("👦👧👦 子供3人組が参加！")}
 function assign(){units.forEach(u=>{if(u.dataset.busy==="1"||u.dataset.play==="1")return;let type=u.dataset.type,a=tasks.filter(t=>!t.busy);if(type==="kid")a=a.filter(t=>t.k!=="grass");if(type==="plog")a=a.filter(t=>t.k==="trash");if(type==="robot")a=a.filter(t=>t.k==="grass");if(type==="sweep"){let leaf=a.filter(t=>t.k==="leaf");if(leaf.length)a=leaf}if(!a.length)return;let ux=parseFloat(u.style.left),uy=getY(u);a.sort((p,q)=>Math.abs(p.y-uy)-Math.abs(q.y-uy));let o=a[0];o.busy=1;u.dataset.busy="1";let speed=type==="kid"?1.4:type==="plog"?1.6:type==="sweep"?.85:type==="robot"?.5:1;route(u,ux,uy,o.x,o.y,speed).then(()=>work(u,o,0,type))})}
@@ -578,8 +578,8 @@ const ages=playLog?.tasks?.ages||[],avgAge=ages.length?ages.reduce((a,b)=>a+b,0)
 const purchases=playLog?.purchases||[],types=new Set(purchases.map(p=>p.item)),specialists=["kids","plog","sweep","robot"].filter(k=>types.has(k)).length;
 const toolLevels=(inv.trash-1)+(inv.grass-1)+(inv.leaf-1)+(inv.poop-1),spent=playLog?.gspt?.spent||0,good=playLog?.goodMatch||0,maxC=playLog?.maxCombo||0;
 let clean=clamp(clearRate*72+Math.max(0,18-remaining*3)+Math.max(0,10-avgAge*.45),0,100);
-let action=clamp(cleared*1.55+Math.min(15,maxC*1.35)+Math.min(10,fireCount*5),0,100);
-let equip=clamp(toolLevels*6.5+Math.min(18,spent/80)+(toolLevels>=5?6:0)+(toolLevels>=8?8:0),0,100);
+let action=clamp(cleared*.95+Math.min(12,maxC*1.15)+Math.min(8,fireCount*4)+clearRate*8,0,100);
+let equip=clamp(toolLevels*5.5+Math.min(15,spent/90)+(toolLevels>=5?6:0)+(toolLevels>=9?9:0),0,100);
 let team=clamp(specialists*14+Math.min(28,countUnits("kid")*2.5+countUnits("plog")*7+countUnits("sweep")*7+countUnits("robot")*8)+Math.min(16,good*2),0,100);
 let strategy=clamp(clearRate*35+Math.min(25,good*3)+specialists*5+Math.min(10,fireCount*5)+Math.max(0,10-Math.abs(pts-180)/28),0,100);
 let avg=(clean+action+equip+team+strategy)/5;
@@ -657,7 +657,7 @@ $("#rankClose").onclick=()=>$("#rankingModal").classList.remove("show");
 
 const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSc26_ybjqCkAbZVkENsyrWo_Is7osQ8ws1E7nJzwCLo__abEg/formResponse";
 function boughtCount(k){return playLog?playLog.purchases.filter(p=>p.item===k).length:0}
-async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"5.1.16b-white",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
+async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"5.2-white",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
 $("#sendResult").onclick=submitResult;
 $("#playerName").value=localStorage.getItem("gsPlayerName")||"";
 reset();
