@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Prototype 4.3.7</title>
+<title>Good Street Ver. 5.1.16b WHITE MODEL</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
@@ -10,10 +10,10 @@ header{z-index:30;padding:8px 10px;background:#16232d;border-bottom:1px solid #f
 .build{position:absolute;top:0;bottom:0;width:13%;background:repeating-linear-gradient(#bb6950 0 180px,#d9b563 180px 360px,#708d75 360px 540px,#726c86 540px 720px)}.bl{left:0}.br{right:0}
 .walk{position:absolute;top:0;bottom:0;width:26%;background:repeating-linear-gradient(0deg,#d7d0c5 0 32px,#c5bcb0 32px 35px)}.wl{left:13%}.wr{right:13%}
 .road{position:absolute;left:39%;width:22%;top:0;bottom:0;background:#555f67;border-left:3px solid #f4ecd2;border-right:3px solid #f4ecd2}.road:after{content:"";position:absolute;left:50%;height:100%;width:2px;background:repeating-linear-gradient(#fff 0 24px,transparent 24px 52px)}
-.plant{position:absolute;width:9%;height:84px;background:linear-gradient(90deg,#4f7c43,#659953);border:2px solid #3c6234;border-radius:7px;z-index:2}
+.plant{position:absolute;width:5%;background:#8db568;border:2px solid #58794b;border-radius:3px;z-index:2}
 .tree{position:absolute;width:25px;height:25px;border-radius:50%;background:#3f974d;border:3px solid #286d36;box-shadow:0 5px 0 #77533a;transform:translate(-50%,-50%);z-index:3}
-.cross{position:absolute;left:39%;width:22%;height:52px;z-index:4;background:repeating-linear-gradient(to bottom,transparent 0 5px,#fff 5px 10px,transparent 10px 15px)}
-.signal{position:absolute;width:16px;height:42px;background:#444;border-radius:4px;z-index:7;transform:translate(-50%,-50%)}.signal:before{content:"";position:absolute;left:3px;top:4px;width:10px;height:10px;border-radius:50%;background:#f44;box-shadow:0 0 7px #f44}.signal.green:before{background:#55ee72;box-shadow:0 0 7px #55ee72}
+.cross{position:absolute;left:37%;width:26%;height:5%;z-index:5;background:repeating-linear-gradient(to right,#fff 0 8%,transparent 8% 16%);border-top:1px solid #ffffff99;border-bottom:1px solid #ffffff99}
+.signal{position:absolute;width:16px;height:42px;background:#444;border-radius:4px;z-index:7;transform:translate(-50%,-50%)}.signal:before{content:"";position:absolute;left:3px;top:4px;width:10px;height:10px;border-radius:50%;background:#f44;box-shadow:0 0 7px #f44}.signal.green:before{background:#55ee72;box-shadow:0 0 7px #55ee72}.signal:not(.green):before{background:#ff5252;box-shadow:0 0 7px #ff5252}
 .car{position:absolute;width:20px;height:38px;border-radius:6px;border:2px solid #ffffff88;background:#4c86cf;z-index:6;transform:translate(-50%,-50%)}
 .e{position:absolute;display:grid;place-items:center;transform:translate(-50%,-50%);user-select:none}.task{width:30px;height:30px;border-radius:8px;background:#fff;border:2px solid #31434e;box-shadow:0 3px #0004;font-size:17px;z-index:11;cursor:pointer}.task.old{box-shadow:0 0 12px #ff745f}
 .unit{border:3px solid #fff;box-shadow:0 3px #0005;border-radius:50%;z-index:16;transition:left .38s linear,top .38s linear}
@@ -52,7 +52,7 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 
 #ov{position:fixed;inset:0;z-index:80;background:#071019df;display:grid;place-items:center;padding:18px}.card{width:min(430px,100%);background:#1a2933;border-radius:20px;padding:22px;text-align:center}.card p{line-height:1.6;color:#d5dfe5;font-size:14px}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#72e288;font-weight:1000;font-size:18px;margin-top:8px;margin-bottom:4px}.hide{display:none!important}
 
-/* === Prototype 4.3.7 : one-screen fixed field === */
+/* === Ver. 5.1.16b WHITE MODEL : one-screen fixed field === */
 #app{
   height:100dvh;
   max-width:500px;
@@ -129,9 +129,165 @@ footer{padding:4px 5px}
 #again.locked{background:#46535a;color:#aeb8bd}
 #resultShield{display:none;margin:8px 0;padding:8px;border-radius:9px;background:#2b3942;color:#cbd5da;font-size:11px;font-weight:900}
 #result.resultLock #resultShield{display:block}
+#countdown{position:absolute;inset:0;z-index:105;display:none;place-items:center;background:#071019a8;pointer-events:none}#countdown.show{display:grid}#countdownText{font-size:82px;font-weight:1000;color:#fff;text-shadow:0 5px #18252c,0 0 22px #ffffff88}#countdownText.go{font-size:36px;color:#ffe66a;text-shadow:0 4px #8a4b00,0 0 25px #ffb52e}
+/* ===== Ver.5.1 WHITE MODEL : layout verification only ===== */
+#world{
+  background:
+    linear-gradient(90deg,
+      #c9c9c9 0 15%,
+      #e9dfc6 15% 37%,
+      #666b6e 37% 63%,
+      #e9dfc6 63% 85%,
+      #c9c9c9 85% 100%);
+}
+#world:before{
+ content:"";position:absolute;left:49.4%;top:0;width:1.2%;height:100%;
+ background:repeating-linear-gradient(180deg,#eee 0 18px,transparent 18px 38px);
+ opacity:.8;pointer-events:none
+}
+#whiteModelOverlay{position:absolute;inset:0;pointer-events:none;z-index:1}
+.wm-building{position:absolute;background:#b8b8b8;border:2px solid #777}
+.wm-plant{position:absolute;background:#8db568;border:2px solid #58794b}
+.wm-gap{position:absolute;background:#e9dfc6}
+.wm-cross{position:absolute;background:repeating-linear-gradient(90deg,#f8f8f8 0 7%,transparent 7% 14%);border-top:1px solid #ddd;border-bottom:1px solid #ddd}
+.wm-cross-v{position:absolute;background:repeating-linear-gradient(180deg,#f8f8f8 0 9%,transparent 9% 18%);border-left:1px solid #ddd;border-right:1px solid #ddd;z-index:5}
+.wm-intersection{position:absolute;left:0;width:100%;background:#666b6e}
+.wm-curb{position:absolute;border:2px solid #999;border-top:0}
+.wm-label{position:absolute;font-size:9px;font-weight:900;color:#263238;background:#ffffffcc;padding:2px 4px;border-radius:3px}
+#kinjiro{z-index:7}
+
+#kinjiro{left:64.5%!important;top:34.5%!important;right:auto!important;bottom:auto!important}
+
+.wm-sidewalk-h{
+  position:absolute;
+  background:#e9dfc6;
+  border-top:1px solid #b8aa8f;
+  border-bottom:1px solid #b8aa8f;
+  z-index:2;
+}
+
+header #fireBox.fireHeader{
+ position:static!important;left:auto!important;right:auto!important;bottom:auto!important;
+ transform:none!important;width:100%!important;max-width:none!important;
+ margin:4px 0 0!important;padding:0!important;z-index:auto!important;
+ pointer-events:auto!important;
+}
+header #fireBtn{height:24px!important;font-size:10px!important;padding:2px 8px!important}
+header #fireTrack{height:5px!important;margin-top:2px!important}
+#kinjiro.ready{
+ opacity:1!important;background:#ff7a1f!important;border:3px solid #fff0a0!important;
+ animation:kinReadyStrong .34s steps(2,end) infinite!important;
+ box-shadow:0 0 0 4px #ff7a1f99,0 0 25px 12px #ff5b00!important;
+}
+@keyframes kinReadyStrong{
+ 0%,100%{transform:scale(1);filter:brightness(1)}
+ 50%{transform:scale(1.32);filter:brightness(2)}
+}
+
+.scoreFireGroup{
+ display:grid;
+ grid-template-columns:auto 86px;
+ align-items:center;
+ gap:6px;
+ min-width:142px;
+}
+.scoreFireGroup .pts{white-space:nowrap;text-align:right}
+header #fireBox.fireHeader{
+ position:static!important;
+ left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+ transform:none!important;
+ width:86px!important;max-width:86px!important;
+ margin:0!important;padding:0!important;
+ pointer-events:none!important;
+}
+.fireMiniLabel{
+ font-size:8px;
+ line-height:1;
+ font-weight:1000;
+ color:#ffd36b;
+ display:flex;
+ justify-content:space-between;
+ margin-bottom:2px;
+}
+header #fireTrack{
+ height:6px!important;
+ margin:0!important;
+ background:#2c2020!important;
+ border:1px solid #ffffff38!important;
+}
+.top{
+ grid-template-columns:auto auto 32px minmax(142px,1fr)!important;
+}
+
+.rankBtn{width:100%;padding:12px;border:0;border-radius:11px;background:#d6a52f;color:#172832;font-weight:1000;font-size:15px;margin:7px 0}
+#rankingModal{position:fixed;inset:0;z-index:120;display:none;place-items:center;background:#071019e8;padding:12px}
+#rankingModal.show{display:grid}
+.rankCard{width:min(420px,100%);max-height:88dvh;overflow-y:auto;background:#172630;border:1px solid #ffffff28;border-radius:18px;padding:16px}
+.rankCard h2{text-align:center;margin:0 0 10px;color:#ffe27a}
+.rankRow{display:grid;grid-template-columns:42px 1fr auto;gap:8px;align-items:center;padding:8px 6px;border-bottom:1px solid #ffffff14}
+.rankPos{font-weight:1000;text-align:center}.rankName{font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankScore{font-weight:1000;color:#ffe27a}
+.rankMe{margin:10px 0;padding:9px;border-radius:9px;background:#213b46;text-align:center;font-size:12px}
+.rankClose{width:100%;padding:11px;border:0;border-radius:10px;background:#72e288;font-weight:1000;margin-top:10px}
+.rankStatus{text-align:center;color:#c9d4da;font-size:12px;padding:14px}
 </style></head>
-<body><div id="app"><header><div class="top"><div id="time" class="time">02:00</div><div id="season" class="season">🌸 春</div><button id="pauseBtn" type="button" class="pauseBtn">⏸</button><div id="pts" class="pts">0 GSpt</div></div><div class="sub"><span id="status">タスクをタップ！</span><span id="combo">COMBO 0</span></div></header>
-<main id="view"><div id="world"><div class="build bl"></div><div class="build br"></div><div class="walk wl"></div><div class="walk wr"></div><div class="road"></div></div><button id="kinjiro" type="button" title="二宮金次郎像">📚</button><div id="cutin"><div class="cutinCard"><div><span class="cutinKin">🧑‍🌾</span><span class="cutinTong">🗜️</span></div><div class="cutinText">GOOD STREET<br>FIRE!! 🔥</div></div></div><div id="pauseOverlay"><div class="pauseCard"><strong>PAUSE</strong><button id="resumeBtn" type="button">▶ 再開</button></div></div><div id="comboFx"></div><div id="toast"></div><div id="fireBox"><button id="fireBtn">🔥 GOOD STREET FIRE <span id="firePct">0%</span></button><div id="fireTrack"><div id="fireFill"></div></div></div>
+<body><div id="app"><header>
+<div class="top">
+  <div id="time" class="time">02:00</div>
+  <div id="season" class="season">🌸 春</div>
+  <button id="pauseBtn" type="button" class="pauseBtn">⏸</button>
+  <div class="scoreFireGroup">
+    <div id="pts" class="pts">0 GSpt</div>
+    <div id="fireBox" class="fireHeader">
+      <div class="fireMiniLabel">🔥 <span id="firePct">0%</span></div>
+      <div id="fireTrack"><div id="fireFill"></div></div>
+    </div>
+  </div>
+</div>
+<div class="sub"><span id="status">タスクをタップ！</span><span id="combo">COMBO 0</span></div>
+</header>
+<main id="view"><div id="world">
+<div id="whiteModelOverlay" aria-hidden="true">
+  <!-- building masses -->
+  <div class="wm-building" style="left:0;top:0;width:15%;height:46%"></div>
+  <div class="wm-building" style="right:0;top:0;width:15%;height:46%"></div>
+  <div class="wm-building" style="left:0;top:74%;width:15%;height:26%"></div>
+  <div class="wm-building" style="right:0;top:74%;width:15%;height:26%"></div>
+  <!-- slim sidewalks along the east-west side road -->
+  <div class="wm-sidewalk-h" style="left:0;top:46%;width:37%;height:4%"></div>
+  <div class="wm-sidewalk-h" style="left:63%;top:46%;width:37%;height:4%"></div>
+  <div class="wm-sidewalk-h" style="left:0;top:72%;width:37%;height:2%"></div>
+  <div class="wm-sidewalk-h" style="left:63%;top:72%;width:37%;height:2%"></div>
+
+
+  <!-- planting strips: segmented to match the hand-drawn master -->
+  <!-- upper-left -->
+  <!-- upper-right -->
+
+  <!-- lower-left / lower-right -->
+
+  <!-- pedestrian gaps: no planting at crosswalk connections -->
+  <div class="wm-gap" style="left:32%;top:11%;width:5%;height:12%"></div>
+  <div class="wm-gap" style="left:63%;top:11%;width:5%;height:12%"></div>
+  <div class="wm-gap" style="left:32%;top:43%;width:5%;height:9%"></div>
+  <div class="wm-gap" style="left:63%;top:43%;width:5%;height:9%"></div>
+  <div class="wm-gap" style="left:32%;top:72%;width:5%;height:6%"></div>
+  <div class="wm-gap" style="left:63%;top:72%;width:5%;height:6%"></div>
+  <!-- upper unsignalized crossing is rendered by the live game layer -->
+<!-- signalized main intersection -->
+  <div class="wm-intersection" style="top:50%;height:22%"></div>
+  <!-- north/south signalized crosswalks are rendered by the live game layer -->
+<!-- east/west crosswalks OUTSIDE the intersection core -->
+  <div class="wm-cross-v" style="left:24%;top:50%;width:8%;height:22%"></div>
+  <div class="wm-cross-v" style="left:68%;top:50%;width:8%;height:22%"></div>
+
+  <div class="wm-label" style="left:2%;top:3%">建物</div>
+  <div class="wm-label" style="right:2%;top:3%">建物</div>
+  <div class="wm-label" style="left:2%;top:75%">建物</div>
+  <div class="wm-label" style="right:2%;top:75%">建物</div>
+  <div class="wm-label" style="left:39%;top:10%">信号なし横断歩道</div>
+  <div class="wm-label" style="left:41%;top:58%">信号交差点</div><div class="wm-label" style="left:3%;top:47%">横道歩道</div><div class="wm-label" style="right:3%;top:47%">横道歩道</div><div class="wm-label" style="left:16%;top:60%">縦方向横断歩道</div><div class="wm-label" style="right:16%;top:60%">縦方向横断歩道</div>
+</div>
+<div class="build bl"></div><div class="build br"></div><div class="walk wl"></div><div class="walk wr"></div><div class="road"></div></div><div id="countdown"><div id="countdownText">3</div></div><button id="kinjiro" type="button" title="二宮金次郎像">🗿</button><div id="cutin"><div class="cutinCard"><div><span class="cutinKin">🧑‍🌾</span><span class="cutinTong">🗜️</span></div><div class="cutinText">GOOD STREET<br>FIRE!! 🔥</div></div></div><div id="pauseOverlay"><div class="pauseCard"><strong>PAUSE</strong><button id="resumeBtn" type="button">▶ 再開</button></div></div><div id="comboFx"></div><div id="toast"></div>
 <div id="gearRack" class="statusRack left"><div class="ttl">GEAR</div>
 <div class="row" data-stat="trash">🗑 <small>1</small></div>
 <div class="row" data-stat="grass">🌿 <small>1</small></div>
@@ -151,28 +307,34 @@ footer{padding:4px 5px}
 <div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・遊ぶ</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>320 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>300 GSpt｜落ち葉のプロ</span></button><button class="buy" data-buy="robot">🤖 草刈りロボ<span>420 GSpt｜草専用・範囲処理</span></button></div>
 <div class="shop hide" id="machines"><div style="grid-column:1/-1;text-align:center;font-size:10px;color:#8fa0aa;padding:10px">機材枠は準備中</div></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Prototype 4.3.7</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">ゲームスタート</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.1.16b WHITE MODEL</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 8px">
-<button id="copyLog" type="button" style="padding:11px;border-radius:10px;border:1px solid #ffffff22;background:#315d3b;color:white;font-weight:900">📋 ログをコピー</button>
-<button id="saveLog" type="button" style="padding:11px;border-radius:10px;border:1px solid #ffffff22;background:#26343e;color:white;font-weight:900">JSON保存</button>
+
+
 </div>
-<details style="margin:8px 0 12px;text-align:left;background:#101a22;border:1px solid #ffffff18;border-radius:12px;padding:10px">
-<summary style="cursor:pointer;font-weight:900">📊 プレイログを見る</summary>
-<pre id="logPreview" style="max-height:125px;overflow:auto;white-space:pre-wrap;font:10px/1.45 monospace;color:#aebcc6;background:#0a1117;padding:8px;border-radius:8px"></pre>
-</details>
-<button id="sendResult" class="sendBtn" type="button">📤 結果を送信</button><div id="resultShield">🏁 RESULT！ まず結果を確認してね…</div><button id="again" class="primary">もう一度</button></div></div>
-<div id="tutorial"><div class="tutorialCard"><div style="display:flex;justify-content:space-between"><b>📖 TUTORIAL</b><span id="tCount"></span></div><div id="tDemo" style="position:relative;height:285px;margin:10px 0;border-radius:14px;overflow:hidden;background:linear-gradient(90deg,#433b34 0 20%,#b9b2a3 20% 38%,#454b50 38% 62%,#b9b2a3 62% 80%,#433b34 80%);border:1px solid #ffffff22"><div style="position:absolute;left:38%;top:45%;width:24%;height:9%;background:repeating-linear-gradient(90deg,#fff 0 10%,transparent 10% 20%)"></div><div id="tPlayer" style="position:absolute;left:25%;top:70%;font-size:28px">🧍</div><div id="tTask" style="position:absolute;left:67%;top:28%;font-size:25px">🗑️</div><div id="tShop" style="position:absolute;left:4%;bottom:5%;font-size:12px;background:#16242dcc;padding:7px;border-radius:8px">🧤 道具<br>🤝 仲間</div><div id="tFire" style="position:absolute;left:35%;bottom:4%;width:30%;text-align:center;font-size:10px">🔥 FIRE<div style="height:7px;background:#e74f28;border-radius:8px"></div></div><div id="tKin" style="position:absolute;right:8%;top:56%;font-size:30px">📚</div><div id="tSignal" style="position:absolute;left:34%;top:43%;font-size:25px">🚦</div></div><div id="tTitle" style="font-size:18px;font-weight:1000"></div><div id="tText" style="font-size:13px;line-height:1.6;color:#d2dce1;min-height:65px"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button id="tPrev" class="tutorialBtn">← 戻る</button><button id="tNext" class="tutorialClose">次へ →</button></div></div></div><script>
+
+<button id="rankingBtn" class="rankBtn" type="button">🏆 RANKING</button><button id="sendResult" class="sendBtn" type="button">📤 結果を送信</button><div id="resultShield">🏁 RESULT！ まず結果を確認してね…</div><button id="again" class="primary">もう一度</button></div></div>
+<div id="tutorial"><div class="tutorialCard"><div style="display:flex;justify-content:space-between"><b>📖 TUTORIAL</b><span id="tCount"></span></div><div id="tDemo" style="position:relative;height:285px;margin:10px 0;border-radius:14px;overflow:hidden;background:linear-gradient(90deg,#433b34 0 20%,#b9b2a3 20% 38%,#454b50 38% 62%,#b9b2a3 62% 80%,#433b34 80%);border:1px solid #ffffff22"><div style="position:absolute;left:38%;top:45%;width:24%;height:9%;background:repeating-linear-gradient(90deg,#fff 0 10%,transparent 10% 20%)"></div><div id="tPlayer" style="position:absolute;left:25%;top:70%;font-size:28px">🧍</div><div id="tTask" style="position:absolute;left:67%;top:28%;font-size:25px">🗑️</div><div id="tShop" style="position:absolute;left:4%;bottom:5%;font-size:12px;background:#16242dcc;padding:7px;border-radius:8px">🧤 道具<br>🤝 仲間</div><div id="tFire" style="position:absolute;left:35%;bottom:4%;width:30%;text-align:center;font-size:10px">🔥 FIRE<div style="height:7px;background:#e74f28;border-radius:8px"></div></div><div id="tKin" style="position:absolute;right:8%;top:56%;font-size:30px">📚</div><div id="tSignal" style="position:absolute;left:34%;top:43%;font-size:25px">🚦</div></div><div id="tTitle" style="font-size:18px;font-weight:1000"></div><div id="tText" style="font-size:13px;line-height:1.6;color:#d2dce1;min-height:65px"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button id="tPrev" class="tutorialBtn">← 戻る</button><button id="tNext" class="tutorialClose">次へ →</button></div></div></div><div id="rankingModal">
+  <div class="rankCard">
+    <h2>🏆 GOOD STREET RANKING</h2>
+    <div id="rankStatus" class="rankStatus">ランキングを読み込み中…</div>
+    <div id="rankList"></div>
+    <div id="rankMe" class="rankMe" style="display:none"></div>
+    <button id="rankClose" class="rankClose" type="button">閉じる</button>
+  </div>
+</div>
+<script>
 (()=>{
 const $=s=>document.querySelector(s), world=$("#world"),view=$("#view"),W=1000,D=120;
 const C={trash:["🗑️",1900,32],grass:["🌿",2600,40],leaf:["🍂",2300,36],poop:["💩",3000,48]}, SE=[["🌸","春"],["☀️","夏"],["🍁","秋"],["❄️","冬"]];
-const crossings=[315,690],plants=[],trees=[],signals=[]; let run=0,left=D,pts=0,totalPts=0,combo=0,last=0,cam=0,busy=0,tasks=[],units=[],cars=[],season=0,machine=0,armed=null,ints=[];
+const crossingDefs=[{y:170,signalized:false},{y:475,signalized:true},{y:745,signalized:true}],sideCrossings={L:{x:28,y1:500,y2:720},R:{x:72,y1:500,y2:720}},crossings=crossingDefs.map(c=>c.y),plants=[],trees=[],signals=[]; let run=0,left=D,pts=0,totalPts=0,combo=0,last=0,cam=0,busy=0,tasks=[],units=[],cars=[],season=0,machine=0,armed=null,ints=[];
 let playLog=null,lastLogJson="";
 let fire=0,fireActive=false,fireTimer=null;
-let paused=false,cutinActive=false,fireCount=0,resultSent=false,currentPlayer="",crossingBusy=[0,0];
+let paused=false,cutinActive=false,fireCount=0,resultSent=false,currentPlayer="",crossingBusy=[0,0,0];
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function setY(el,y){el.style.top=(y/W*100)+"%"}function getY(el){let t=parseFloat(el.style.top)||0;return t/100*W} function side(x){return x<50?"L":"R"} function camera(y){cam=0;world.style.transform="none"}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"4.3.7",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"5.1.16b-white",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
 function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;return JSON.stringify({...playLog,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length}},null,2)}
 
@@ -180,9 +342,9 @@ function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a
 function setPaused(v){if(!run)return;paused=v;$("#pauseOverlay").classList.toggle("show",v);$("#pauseBtn").classList.toggle("paused",v);$("#pauseBtn").textContent=v?"▶":"⏸";if(playLog)evt(v?"pause_start":"pause_end")}
 function fireHud(){
  const pct=Math.round(fire);
- $("#fireFill").style.width=pct+"%";$("#firePct").textContent=pct+"%";
- const b=$("#fireBtn");b.classList.toggle("ready",fire>=100&&!fireActive);b.classList.toggle("active",fireActive);
- b.disabled=true;$("#kinjiro").classList.toggle("ready",run&&fire>=100&&!fireActive&&!paused);
+ $("#fireFill").style.width=pct+"%";
+ $("#firePct").textContent=pct+"%";
+ $("#kinjiro").classList.toggle("ready",run&&fire>=100&&!fireActive&&!paused);
 }
 function addFire(n,why=""){
  if(!run||fireActive)return;
@@ -209,22 +371,74 @@ function updateRacks(flashKey=null){
  }
 }
 function setup(){
- for(let y=70;y<W-40;y+=92){
-  [35,65].forEach((x,j)=>{
-   let p=document.createElement("div");p.className="plant";
-   p.style.left=(j?62:29)+"%";p.style.top=((y-27)/W*100)+"%";
-   world.append(p);plants.push({x,y,side:j?"R":"L"});
-   let t=document.createElement("div");t.className="tree";t.style.left=x+"%";t.style.top=(y/W*100)+"%";
-   world.append(t);trees.push({x,y})
-  })
- }
- crossings.forEach((y,i)=>{
-  let c=document.createElement("div");c.className="cross";c.style.top=((y-17)/W*100)+"%";world.append(c);
-  if(i===0)[37,63].forEach(x=>{
-   let s=document.createElement("div");s.className="signal green";s.style.left=x+"%";s.style.top=((y-22)/W*100)+"%";
-   world.append(s);signals.push({x,y:y-22,e:s})
-  })
- })
+ // Ver.5.1.2: planting is no longer auto-generated at regular intervals.
+ // These ranges are the actual planting zones; crosswalk approaches are explicit gaps.
+ const plantSegments=[
+   {side:"L",x:35,left:32,y1:0,y2:110},
+   {side:"R",x:65,left:63,y1:0,y2:110},
+
+   {side:"L",x:35,left:32,y1:230,y2:430},
+   {side:"R",x:65,left:63,y1:230,y2:430},
+
+   {side:"L",x:35,left:32,y1:780,y2:1000},
+   {side:"R",x:65,left:63,y1:780,y2:1000}
+ ];
+
+ plantSegments.forEach(seg=>{
+   let p=document.createElement("div");
+   p.className="plant";
+   p.style.left=seg.left+"%";
+   p.style.top=(seg.y1/W*100)+"%";
+   p.style.height=((seg.y2-seg.y1)/W*100)+"%";
+   p.style.minHeight="0";
+   world.append(p);
+
+   // Several logical spawn/tree points per strip.
+   const len=seg.y2-seg.y1;
+   const count=Math.max(1,Math.floor(len/85));
+   for(let i=0;i<count;i++){
+     const y=seg.y1+(i+.5)*len/count;
+     plants.push({x:seg.x,y,side:seg.side,y1:seg.y1,y2:seg.y2});
+     let t=document.createElement("div");
+     t.className="tree";
+     t.style.left=seg.x+"%";
+     t.style.top=(y/W*100)+"%";
+     world.append(t);
+     trees.push({x:seg.x,y});
+   }
+ });
+
+ crossingDefs.forEach((def,i)=>{
+   let c=document.createElement("div");
+   c.className="cross";
+   c.dataset.crossing=i;
+   c.style.top=((def.y/W*100)-2.5)+"%";
+   world.append(c);
+
+   // Only the two crosswalks at the main intersection have pedestrian signals.
+   if(def.signalized){
+     [35.5,64.5].forEach((x,j)=>{
+       let s=document.createElement("div");
+       s.className="signal green";
+       s.style.left=x+"%";
+       // Put the poles just outside the zebra band.
+       s.style.top=(((def.y+(i===1?-34:34))/W)*100)+"%";
+       world.append(s);
+       signals.push({crossing:i,x,y:def.y,e:s});
+     });
+   }
+ });
+
+ // Side-road crosswalk signals: visual only, placed at the four corners of the intersection.
+ [
+   {x:30,y:510},{x:30,y:710},
+   {x:70,y:510},{x:70,y:710}
+ ].forEach(p=>{
+   let s=document.createElement("div");
+   s.className="signal sideSignal";
+   s.style.left=p.x+"%";s.style.top=(p.y/W*100)+"%";
+   world.append(s);signals.push({crossing:"side",x:p.x,y:p.y,e:s});
+ });
 }setup();
 const player=document.createElement("div");player.className="e unit";player.id="player";player.innerHTML='🦺<span class="you">YOU</span>';player.style.left="27%";setY(player,900);world.append(player);
 function hud(){let m=Math.floor(left/60),s=String(left%60).padStart(2,"0");$("#time").textContent=`${String(m).padStart(2,"0")}:${s}`;$("#pts").innerHTML=pts+" GSpt<br><small style=\"font-size:9px;color:#b9c5cc\">TOTAL "+totalPts+"</small>";$("#combo").textContent="COMBO "+combo;document.querySelectorAll(".buy").forEach(b=>{let k=b.dataset.buy;b.classList.toggle("ready",run&&pts>=prices[k]);let sp=b.querySelector("span");if(["trash","grass","leaf","poop"].includes(k))sp.textContent=prices[k]+" GSpt";if(k==="boost"){b.querySelector("b").textContent=machine;sp.textContent=prices[k]+" GSpt"}});updateRacks()}
@@ -242,12 +456,68 @@ function move(el,x,y,speed=1){
   setTimeout(r,duration*1000+25);
  })
 }
-async function route(el,fx,fy,tx,ty,speed=1,isP=0){return (async()=>{if(side(fx)===side(tx)){await move(el,tx,ty,speed);if(isP)camera(ty-view.clientHeight*.48);return}let ci=crossings.slice().sort((a,b)=>Math.abs(a-(fy+ty)/2)-Math.abs(b-(fy+ty)/2))[0]===crossings[0]?0:1,cy=crossings[ci],ex=side(fx)==="L"?37:63,ox=side(fx)==="L"?63:37;await move(el,ex,cy,speed);if(isP)camera(cy-view.clientHeight*.48);if(ci===0)while(run&&!signalGreen){if(isP)$("#status").textContent="🚦 信号待ち…";await new Promise(r=>setTimeout(r,200))}crossingBusy[ci]++;await move(el,ox,cy,speed);crossingBusy[ci]=Math.max(0,crossingBusy[ci]-1);await move(el,tx,ty,speed);if(isP)camera(ty-view.clientHeight*.48)})()}
+async function route(el,fx,fy,tx,ty,speed=1,isP=0){return (async()=>{
+ const fs=side(fx),ts=side(tx);
+
+ // Same-side movement: if the route crosses the central intersection,
+ // use the vertical pedestrian crosswalk on that sidewalk.
+ if(fs===ts){
+   const crossesSideRoad=(fy<500&&ty>720)||(fy>720&&ty<500);
+   if(crossesSideRoad){
+     const sc=sideCrossings[fs];
+     const entryY=fy<ty?500:720;
+     const exitY=fy<ty?720:500;
+
+     await move(el,sc.x,entryY,speed);
+     if(isP)camera(entryY-view.clientHeight*.48);
+
+     // Sidewalk-direction pedestrian phase is opposite to the road-crossing phase.
+     while(run&&signalGreen){
+       if(isP)$("#status").textContent="🚦 信号待ち…";
+       await new Promise(r=>setTimeout(r,200));
+     }
+
+     await move(el,sc.x,exitY,speed);
+     await move(el,tx,ty,speed);
+     if(isP)camera(ty-view.clientHeight*.48);
+     return;
+   }
+
+   await move(el,tx,ty,speed);
+   if(isP)camera(ty-view.clientHeight*.48);
+   return;
+ }
+
+ // Crossing the main road: choose the nearest horizontal crosswalk.
+ const mid=(fy+ty)/2;
+ let ci=0;
+ crossingDefs.forEach((d,i)=>{
+   if(Math.abs(d.y-mid)<Math.abs(crossingDefs[ci].y-mid))ci=i
+ });
+ const def=crossingDefs[ci],cy=def.y,ex=fs==="L"?37:63,ox=fs==="L"?63:37;
+
+ await move(el,ex,cy,speed);
+ if(isP)camera(cy-view.clientHeight*.48);
+
+ if(def.signalized){
+   while(run&&!signalGreen){
+     if(isP)$("#status").textContent="🚦 信号待ち…";
+     await new Promise(r=>setTimeout(r,200))
+   }
+ }
+
+ crossingBusy[ci]++;
+ await move(el,ox,cy,speed);
+ crossingBusy[ci]=Math.max(0,crossingBusy[ci]-1);
+
+ await move(el,tx,ty,speed);
+ if(isP)camera(ty-view.clientHeight*.48)
+})()}
 function kind(){let r=Math.random();if(season===1)return r<.58?"grass":r<.78?"trash":r<.9?"poop":"leaf";if(season===2)return r<.6?"leaf":r<.8?"trash":r<.91?"grass":"poop";if(season===3)return r<.48?"poop":r<.73?"trash":r<.92?"leaf":"grass";return r<.42?"grass":r<.72?"trash":r<.9?"poop":"leaf"}
 function spawn(k=kind(),near=null){if(!run||tasks.length>32)return;let x,y;if(near){x=clamp(near.x+(Math.random()-.5)*5,20,80);y=clamp(near.y+(Math.random()-.5)*70,60,W-60)}
-else if(k==="grass"){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*5;y=z.y+(Math.random()-.5)*52}
+else if(k==="grass"){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*4;let span=Math.min(34,(z.y2-z.y1)*.35);y=clamp(z.y+(Math.random()-.5)*span,z.y1+8,z.y2-8)}
 else if(k==="poop"){let a=Math.random()<.8?trees:signals,z=a[Math.floor(Math.random()*a.length)];x=z.x+(Math.random()-.5)*4;y=z.y+14+Math.random()*24}
-else if(k==="trash"){if(Math.random()<.65){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*6;y=z.y+(Math.random()-.5)*55}else{x=Math.random()<.5?23+Math.random()*12:65+Math.random()*12;y=35+Math.random()*(W-70)}}
+else if(k==="trash"){if(Math.random()<.65){let z=plants[Math.floor(Math.random()*plants.length)];x=z.x+(Math.random()-.5)*5;let span=Math.min(38,(z.y2-z.y1)*.4);y=clamp(z.y+(Math.random()-.5)*span,z.y1+6,z.y2-6)}else{x=Math.random()<.5?23+Math.random()*12:65+Math.random()*12;y=35+Math.random()*(W-70)}}
 else{x=Math.random()<.5?21+Math.random()*16:63+Math.random()*16;y=35+Math.random()*(W-70)}
 if(tasks.some(t=>Math.hypot((t.x-x)*5,(t.y-y)/10)<13))return;let e=document.createElement("div");e.className="e task";e.textContent=C[k][0];e.style.left=x+"%";setY(e,y);let o={k,x,y,e,born:performance.now(),busy:0};e.onclick=ev=>{ev.stopPropagation();select(o)};world.append(e);tasks.push(o);if(playLog){playLog.tasks.spawned[k]++;playLog.tasks.spawned.total++;playLog.tasks.maxConcurrent=Math.max(playLog.tasks.maxConcurrent,tasks.length);evt("spawn",{task:k})}}
 function select(o){if(!run||paused||busy||o.busy)return;busy=1;o.busy=1;$("#status").textContent="移動中…";route(player,parseFloat(player.style.left),getY(player),o.x,o.y,1,1).then(()=>work(player,o,1,"player"))}
@@ -262,26 +532,61 @@ return u}
 function buyKids(){[0,1,2].forEach(i=>makeUnit("kid",25+i*3,820+i*18,["👦","👧","👦"][i]));toast("👦👧👦 子供3人組が参加！")}
 function assign(){units.forEach(u=>{if(u.dataset.busy==="1"||u.dataset.play==="1")return;let type=u.dataset.type,a=tasks.filter(t=>!t.busy);if(type==="kid")a=a.filter(t=>t.k!=="grass");if(type==="plog")a=a.filter(t=>t.k==="trash");if(type==="robot")a=a.filter(t=>t.k==="grass");if(type==="sweep"){let leaf=a.filter(t=>t.k==="leaf");if(leaf.length)a=leaf}if(!a.length)return;let ux=parseFloat(u.style.left),uy=getY(u);a.sort((p,q)=>Math.abs(p.y-uy)-Math.abs(q.y-uy));let o=a[0];o.busy=1;u.dataset.busy="1";let speed=type==="kid"?1.4:type==="plog"?1.6:type==="sweep"?.85:type==="robot"?.5:1;route(u,ux,uy,o.x,o.y,speed).then(()=>work(u,o,0,type))})}
 function spread(){tasks.filter(t=>!t.busy&&performance.now()-t.born>11000).forEach(o=>{o.e.classList.add("old");if(Math.random()<.16&&(o.k==="grass"||o.k==="trash"))spawn(o.k,o)})}
-function car(){if(!run||paused||cars.length>2)return;let c=document.createElement("div");c.className="car",x=Math.random()<.5?44:56,dir=Math.random()<.5?1:-1,y=dir>0?5:W-5;c.style.left=x+"%";setY(c,y);world.append(c);cars.push(c);let last=performance.now();function drive(now){if(!run){c.remove();return}let dt=Math.min(.05,(now-last)/1000);last=now;if(!paused){let stop=false;crossings.forEach((cy,i)=>{let approaching=dir>0?(y<cy&&y>cy-80):(y>cy&&y<cy+80);if(approaching&&((i===0&&!signalGreen)||crossingBusy[i]>0))stop=true});if(!stop)y+=dir*118*dt;setY(c,y)}if(y<-30||y>W+30){c.remove();cars=cars.filter(z=>z!==c)}else requestAnimationFrame(drive)}requestAnimationFrame(drive)}
+function car(){
+ if(!run||paused||cars.length>2)return;
+ let c=document.createElement("div");
+ c.className="car";
+ let dir=Math.random()<.5?1:-1,x=dir>0?56:44,y=dir>0?5:W-5;
+ c.style.left=x+"%";setY(c,y);world.append(c);cars.push(c);
+ let last=performance.now();
+ function drive(now){
+  if(!run){c.remove();return}
+  let dt=Math.min(.05,(now-last)/1000);last=now;
+  if(!paused){
+    let stop=false;
+    crossingDefs.forEach((def,i)=>{
+      const buffer=82;
+      const approaching=dir>0?(y<def.y&&y>def.y-buffer):(y>def.y&&y<def.y+buffer);
+      if(!approaching)return;
+      const pedOnCrossing=crossingBusy[i]>0;
+      const vehicleRed=def.signalized&&signalGreen;
+      if(pedOnCrossing||vehicleRed)stop=true;
+    });
+    if(!stop)y+=dir*118*dt;
+    setY(c,y)
+  }
+  if(y<-30||y>W+30){
+    c.remove();cars=cars.filter(z=>z!==c)
+  }else requestAnimationFrame(drive)
+ }
+ requestAnimationFrame(drive)
+}
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");["tools","friends","machines"].forEach(x=>$("#"+x).classList.toggle("hide",x!==b.dataset.tab))});
 document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run||paused)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}let paid=prices[k];pts-=paid;if(playLog){playLog.gspt.spent+=paid;playLog.purchases.push({t:D-left,item:k,cost:paid,season});evt("purchase",{item:k,cost:paid})}b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,820,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,820,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,820,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();updateRacks(k);assign()});
-function reset(){crossingBusy=[0,0];fireCount=0;resultSent=false;paused=false;$("#pauseOverlay").classList.remove("show");$("#pauseBtn").classList.remove("paused");$("#pauseBtn").textContent="⏸";ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;fire=0;fireActive=false;clearTimeout(fireTimer);$("#view").classList.remove("fireMode");fireHud();left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};player.style.left="27%";setY(player,900);camera(0);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.add("green"));hud()}
-function start(){let nm=$("#playerName").value.trim();if(!nm){toast("プレイヤー名を入力してね");$("#playerName").focus();return}currentPlayer=nm;localStorage.setItem("gsPlayerName",nm);reset();playLog=initLog();playLog.playerName=currentPlayer;resultSent=false;$("#sendResult").disabled=false;$("#sendResult").textContent="📤 結果を送信";run=1;$("#ov").classList.add("hide");evt("game_start");toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{if(paused)return;left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{if(paused)return;let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(()=>{if(!paused)spread()},3400),setInterval(()=>{if(paused)return;signalGreen=!signalGreen;signals.forEach(s=>s.e.classList.toggle("green",signalGreen))},5400),setInterval(()=>{if(!paused)car()},4300))}
+function reset(){crossingBusy=[0,0,0];fireCount=0;resultSent=false;paused=false;$("#pauseOverlay").classList.remove("show");$("#pauseBtn").classList.remove("paused");$("#pauseBtn").textContent="⏸";ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;fire=0;fireActive=false;clearTimeout(fireTimer);$("#view").classList.remove("fireMode");fireHud();left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};player.style.left="27%";setY(player,900);camera(0);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.toggle("green",s.crossing==="side"?!signalGreen:signalGreen));hud()}
+async function start(){let nm=$("#playerName").value.trim();if(!nm){toast("プレイヤー名を入力してね");$("#playerName").focus();return}currentPlayer=nm;localStorage.setItem("gsPlayerName",nm);reset();playLog=initLog();playLog.playerName=currentPlayer;resultSent=false;$("#sendResult").disabled=false;$("#sendResult").textContent="📤 結果を送信";$("#start").disabled=true;$("#ov").classList.add("hide");let cd=$("#countdown"),ct=$("#countdownText");cd.classList.add("show");for(let n of ["3","2","1"]){ct.className="";ct.textContent=n;await new Promise(r=>setTimeout(r,800))}ct.className="go";ct.textContent="GOOD STREET！";await new Promise(r=>setTimeout(r,650));cd.classList.remove("show");$("#start").disabled=false;run=1;$("#ov").classList.add("hide");evt("game_start");toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{if(paused)return;left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{if(paused)return;let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(()=>{if(!paused)spread()},3400),setInterval(()=>{
+  if(paused)return;
+  signalGreen=!signalGreen;
+  signals.forEach(s=>{
+    const isSide=s.crossing==="side";
+    s.e.classList.toggle("green",isSide?!signalGreen:signalGreen);
+  })
+},5400),setInterval(()=>{if(!paused)car()},4300))}
 function end(){run=0;ints.forEach(clearInterval);
 const spawned=playLog?.tasks?.spawned?.total||1,cleared=playLog?.tasks?.cleared?.total||0,remaining=tasks.length,clearRate=cleared/spawned;
 const ages=playLog?.tasks?.ages||[],avgAge=ages.length?ages.reduce((a,b)=>a+b,0)/ages.length:30;
 const purchases=playLog?.purchases||[],types=new Set(purchases.map(p=>p.item)),specialists=["kids","plog","sweep","robot"].filter(k=>types.has(k)).length;
 const toolLevels=(inv.trash-1)+(inv.grass-1)+(inv.leaf-1)+(inv.poop-1),spent=playLog?.gspt?.spent||0,good=playLog?.goodMatch||0,maxC=playLog?.maxCombo||0;
 let clean=clamp(clearRate*72+Math.max(0,18-remaining*3)+Math.max(0,10-avgAge*.45),0,100);
-let action=clamp(cleared*2.15+Math.min(18,maxC*1.8)+Math.min(12,fireCount*6),0,100);
-let equip=clamp(toolLevels*9+Math.min(24,spent/55)+(toolLevels>=4?8:0),0,100);
+let action=clamp(cleared*1.55+Math.min(15,maxC*1.35)+Math.min(10,fireCount*5),0,100);
+let equip=clamp(toolLevels*6.5+Math.min(18,spent/80)+(toolLevels>=5?6:0)+(toolLevels>=8?8:0),0,100);
 let team=clamp(specialists*14+Math.min(28,countUnits("kid")*2.5+countUnits("plog")*7+countUnits("sweep")*7+countUnits("robot")*8)+Math.min(16,good*2),0,100);
 let strategy=clamp(clearRate*35+Math.min(25,good*3)+specialists*5+Math.min(10,fireCount*5)+Math.max(0,10-Math.abs(pts-180)/28),0,100);
 let avg=(clean+action+equip+team+strategy)/5;
 let finalScore=Math.max(0,Math.round(totalPts*4.2+cleared*38+good*55+maxC*22+fireCount*120+avg*18-remaining*45));
 let rank=finalScore>=9000?"S":finalScore>=7000?"A":finalScore>=5200?"B":finalScore>=3500?"C":"D";
 $("#resultText").innerHTML=`<span style="font-size:12px;color:#aebbc4">GOOD STREET SCORE</span><br><b style="font-size:34px;color:#ffe66a">${finalScore.toLocaleString()} pt</b><br><span style="font-size:21px">RANK <b>${rank}</b></span><br><br>累計 <b>${totalPts} GSpt</b> ／ 所持 ${pts} GSpt<br>処理 ${cleared}件 ／ 残タスク ${remaining}件<br><br>🧹 CLEAN ${Math.round(clean)}<br>⚡ ACTION ${Math.round(action)}<br>🛠 EQUIPMENT ${Math.round(equip)}<br>🤝 TEAM ${Math.round(team)}<br>🧠 STRATEGY ${Math.round(strategy)}`;
-if(playLog){playLog.endedAt=new Date().toISOString();playLog.score=finalScore;playLog.rank=rank;playLog.gspt.earned=totalPts;playLog.gspt.remaining=pts;playLog.finalAxes={clean:Math.round(clean),action:Math.round(action),equipment:Math.round(equip),team:Math.round(team),strategy:Math.round(strategy)};["trash","grass","leaf","poop"].forEach(k=>playLog.tasks.remaining[k]=tasks.filter(t=>t.k===k).length);playLog.tasks.remaining.total=tasks.length;playLog.fireCount=fireCount;playLog.playerName=currentPlayer;evt("game_end",{score:finalScore,rank});lastLogJson=logText();$("#logPreview").textContent=lastLogJson}
+if(playLog){playLog.endedAt=new Date().toISOString();playLog.score=finalScore;playLog.rank=rank;playLog.gspt.earned=totalPts;playLog.gspt.remaining=pts;playLog.finalAxes={clean:Math.round(clean),action:Math.round(action),equipment:Math.round(equip),team:Math.round(team),strategy:Math.round(strategy)};["trash","grass","leaf","poop"].forEach(k=>playLog.tasks.remaining[k]=tasks.filter(t=>t.k===k).length);playLog.tasks.remaining.total=tasks.length;playLog.fireCount=fireCount;playLog.playerName=currentPlayer;evt("game_end",{score:finalScore,rank});lastLogJson=logText()}
 $("#ov").classList.remove("hide");$("#startCard").classList.add("hide");$("#result").classList.remove("hide");
 $("#result").classList.add("resultLock");$("#again").classList.add("locked");$("#again").disabled=true;$("#again").textContent="結果を確認中…";
 setTimeout(()=>{$("#result").classList.remove("resultLock");$("#again").classList.remove("locked");$("#again").disabled=false;$("#again").textContent="▶ もう一度プレイ"},2500)}
@@ -293,12 +598,67 @@ $("#app").addEventListener("touchend",e=>{
  lastTouchEnd=now;
 },{passive:false});
 const tutorialBtn=$("#tutorialBtn"),tSteps=[["駅前通りの維持管理ゲーム","これは、駅前通りを舞台にした維持管理ゲームです。",[]],["2分間で1年間！","プレイタイムは2分間。春・夏・秋・冬、1年間を通して道の維持管理をしていくよ。",[]],["4種類の維持管理","ゴミ拾い 🗑️、草刈り 🌿、落ち葉清掃 🍂、鳥のフン清掃 💩 の4種類をこなします。",["Task"]],["タップして清掃！","道のアイコンをタップすると、プレイヤーが移動して掃除に取り組むよ。",["Player","Task"]],["GSptを使おう","掃除が終わるとアイコンが消えてGSpt獲得！道具の購入や仲間の召喚に使えるよ。",["Shop"]],["仲間は適材適所","仲間には得意不得意あり。子供は3人手伝うけど草刈り不可。しばらくすると遊び始めちゃうよ。",["Shop"]],["GOOD STREET FIRE！","赤いゲージが溜まったら金次郎像をタップ！一定時間みんなのモチベーションが上がって清掃効率アップ！",["Fire","Kin"]],["道路は安全に！","道を渡るときは横断歩道。赤信号は渡っちゃダメ！車も横断者を優先して止まります。",["Signal","Player"]]];let tStep=0;function drawTutorial(){let s=tSteps[tStep];$("#tCount").textContent=`${tStep+1} / 8`;$("#tTitle").textContent=s[0];$("#tText").textContent=s[1];$("#tPrev").disabled=tStep===0;$("#tNext").textContent=tStep===7?"OK、やってみる！":"次へ →";["Player","Task","Shop","Fire","Kin","Signal"].forEach(k=>{$("#t"+k).style.opacity=".18";$("#t"+k).style.transform="scale(1)"});s[2].forEach(k=>{$("#t"+k).style.opacity="1";$("#t"+k).style.transform="scale(1.15)"})}if(tutorialBtn)tutorialBtn.onclick=()=>{tStep=0;drawTutorial();$("#tutorial").classList.add("show")};$("#tPrev").onclick=()=>{if(tStep){tStep--;drawTutorial()}};$("#tNext").onclick=()=>{if(tStep<7){tStep++;drawTutorial()}else $("#tutorial").classList.remove("show")};$("#kinjiro").onclick=activateFire;$("#pauseBtn").onclick=()=>setPaused(!paused);$("#resumeBtn").onclick=()=>setPaused(false);
+
+// Paste the deployed Google Apps Script Web App URL here after publishing.
+const RANKING_API_URL="https://script.google.com/macros/s/AKfycbwaXYDK3GJzrVMf8mCpqLGDih1-fxYcPokyD_xmLf1khYtdyVExjnWM0GavOrb9E0d0Pw/exec";
+
+function renderRanking(data){
+ const status=$("#rankStatus"),list=$("#rankList"),me=$("#rankMe");
+ list.innerHTML="";
+ if(!data||!data.ok){
+   status.textContent="ランキングを取得できませんでした";
+   return;
+ }
+ status.style.display="none";
+ const medals=["🥇","🥈","🥉"];
+ (data.top10||[]).forEach((r,i)=>{
+   const row=document.createElement("div");row.className="rankRow";
+   row.innerHTML=`<div class="rankPos">${medals[i]||i+1}</div><div class="rankName"></div><div class="rankScore">${Number(r.score||0).toLocaleString()} pt</div>`;
+   row.querySelector(".rankName").textContent=r.name||"NO NAME";
+   list.appendChild(row);
+ });
+ if(data.playerRank){
+   me.style.display="block";
+   me.textContent=`あなたの自己ベスト：${Number(data.playerBest||0).toLocaleString()} pt ／ ${data.playerRank}位`;
+ }else{
+   me.style.display="none";
+ }
+}
+
+function loadRanking(){
+ $("#rankingModal").classList.add("show");
+ $("#rankStatus").style.display="block";
+ $("#rankStatus").textContent="ランキングを読み込み中…";
+ $("#rankList").innerHTML="";
+ $("#rankMe").style.display="none";
+ if(!RANKING_API_URL){
+   $("#rankStatus").textContent="ランキング接続URLを設定すると表示されます";
+   return;
+ }
+ const callback="gsRankingCallback_"+Date.now();
+ window[callback]=(data)=>{
+   try{renderRanking(data)}finally{
+     delete window[callback];
+     script.remove();
+   }
+ };
+ const script=document.createElement("script");
+ const sep=RANKING_API_URL.includes("?")?"&":"?";
+ script.src=RANKING_API_URL+sep+"callback="+encodeURIComponent(callback)+"&player="+encodeURIComponent(currentPlayer||"");
+ script.onerror=()=>{
+   $("#rankStatus").textContent="ランキングを取得できませんでした";
+   delete window[callback];
+   script.remove();
+ };
+ document.body.appendChild(script);
+}
+$("#rankingBtn").onclick=loadRanking;
+$("#rankClose").onclick=()=>$("#rankingModal").classList.remove("show");
+
 const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSc26_ybjqCkAbZVkENsyrWo_Is7osQ8ws1E7nJzwCLo__abEg/formResponse";
 function boughtCount(k){return playLog?playLog.purchases.filter(p=>p.item===k).length:0}
-async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"4.3.7",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
+async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"5.1.16b-white",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
 $("#sendResult").onclick=submitResult;
-$("#copyLog").onclick=async()=>{if(!lastLogJson){toast("ログがありません");return}let ok=false;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(lastLogJson);ok=true}}catch(e){}if(!ok){try{let ta=document.createElement("textarea");ta.value=lastLogJson;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);ok=document.execCommand("copy");ta.remove()}catch(e){}}if(ok){toast("📋 プレイログをコピーしました！");let b=$("#copyLog"),old=b.textContent;b.textContent="✓ コピー済み";setTimeout(()=>b.textContent=old,1400)}else{let pre=$("#logPreview"),range=document.createRange();range.selectNodeContents(pre);let sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);toast("選択したログを長押ししてコピーしてね")}};
-$("#saveLog").onclick=()=>{if(!lastLogJson)return;let blob=new Blob([lastLogJson],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="good-street-playlog.json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 $("#playerName").value=localStorage.getItem("gsPlayerName")||"";
 reset();
 })();
