@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Ver. 5.3.15 FOUR PARTNERS DEMO</title>
+<title>Good Street Ver. 5.3.17 SEND PAYLOAD FIX</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
@@ -52,7 +52,7 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 
 #ov{position:fixed;inset:0;z-index:80;background:#071019df;display:grid;place-items:center;padding:18px}.card{width:min(430px,100%);background:#1a2933;border-radius:20px;padding:22px;text-align:center}.card p{line-height:1.6;color:#d5dfe5;font-size:14px}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#72e288;font-weight:1000;font-size:18px;margin-top:8px;margin-bottom:4px}.hide{display:none!important}
 
-/* === Ver. 5.3.15 FOUR PARTNERS DEMO : one-screen fixed field === */
+/* === Ver. 5.3.17 SEND PAYLOAD FIX : one-screen fixed field === */
 #app{
   height:100dvh;
   max-width:500px;
@@ -499,7 +499,7 @@ header #fireTrack{
 <div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・遊ぶ</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>290 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>270 GSpt｜落ち葉のプロ</span></button><button class="buy" data-buy="robot">🤖 草刈りロボ<span>380 GSpt｜草専用・範囲処理</span></button></div>
 <div class="shop hide" id="machines"><div style="grid-column:1/-1;text-align:center;font-size:10px;color:#8fa0aa;padding:10px">機材枠は準備中</div></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.3.15 FOUR PARTNERS DEMO</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.3.17 SEND PAYLOAD FIX</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 8px">
 
 
@@ -550,9 +550,15 @@ let paused=false,cutinActive=false,fireCount=0,resultSent=false,currentPlayer=""
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:290,sweep:270,robot:380,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function setY(el,y){el.style.top=(y/W*100)+"%"}function getY(el){let t=parseFloat(el.style.top)||0;return t/100*W} function side(x){return x<50?"L":"R"} function camera(y){cam=0;world.style.transform="none"}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"5.3.15-four-partners-demo",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"5.3.17-send-payload-fix",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
-function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;return JSON.stringify({...playLog,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length}},null,2)}
+function logText(){
+ if(!playLog)return "";
+ let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+ // Google Formsに送るログは集計情報中心に圧縮。大量のeventsは送信サイズ肥大化を避けるため除外。
+ const compact={...playLog,events:undefined,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length,eventCount:(playLog.events||[]).length}};
+ return JSON.stringify(compact);
+}
 
 
 function setPaused(v){if(!run)return;paused=v;$("#pauseOverlay").classList.toggle("show",v);$("#pauseBtn").classList.toggle("paused",v);$("#pauseBtn").textContent=v?"▶":"⏸";if(playLog)evt(v?"pause_start":"pause_end")}
@@ -1004,7 +1010,26 @@ $("#rankClose").onclick=()=>$("#rankingModal").classList.remove("show");
 
 const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSc26_ybjqCkAbZVkENsyrWo_Is7osQ8ws1E7nJzwCLo__abEg/formResponse";
 function boughtCount(k){return playLog?playLog.purchases.filter(p=>p.item===k).length:0}
-async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"5.3.15-four-partners-demo",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
+async function submitResult(){
+ if(resultSent||!playLog||!lastLogJson)return;
+ const b=$("#sendResult");
+ b.disabled=true;b.textContent="送信中…";
+ const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};
+ const vals=[currentPlayer,"5.3.17-send-payload-fix",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];
+ const fd=new FormData();
+ const ids=["1815354379","622955691","1734014499","377968917","285722605","1164263001","1589887019","1465935588","1847411221","1584653803","1944768313","1353642827","2083490023","1489798462","1944906170","453762315","1307703815","180952359","366608","903899483","1633584540","2048218729","1442573983","1341638158","1827966976","1044356346","539455207"];
+ ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));
+ try{
+   await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});
+   resultSent=true;
+   b.textContent="✓ 結果を送信しました";
+   toast("📤 結果を送信しました！");
+ }catch(e){
+   b.disabled=false;
+   b.textContent="📤 結果を送信";
+   toast("送信できませんでした");
+ }
+}
 $("#sendResult").onclick=submitResult;
 $("#playerName").value=localStorage.getItem("gsPlayerName")||"";
 reset();
