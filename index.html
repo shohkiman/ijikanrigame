@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Good Street Ver. 5.2 WHITE MODEL</title>
+<title>Good Street Ver. 5.3.5 PARTNERS TEST</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}#app,button,.task{touch-action:manipulation;-webkit-user-select:none;user-select:none}html,body{margin:0;height:100%;overflow:hidden;background:#0d151c;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}button{font:inherit}
 #app{height:100%;max-width:500px;margin:auto;display:grid;grid-template-rows:78px 1fr 148px;background:#101820}
@@ -52,7 +52,7 @@ footer{z-index:30;background:#16212b;padding:6px;border-top:1px solid #ffffff20;
 
 #ov{position:fixed;inset:0;z-index:80;background:#071019df;display:grid;place-items:center;padding:18px}.card{width:min(430px,100%);background:#1a2933;border-radius:20px;padding:22px;text-align:center}.card p{line-height:1.6;color:#d5dfe5;font-size:14px}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#72e288;font-weight:1000;font-size:18px;margin-top:8px;margin-bottom:4px}.hide{display:none!important}
 
-/* === Ver. 5.2 WHITE MODEL : one-screen fixed field === */
+/* === Ver. 5.3.5 PARTNERS TEST : one-screen fixed field === */
 #app{
   height:100dvh;
   max-width:500px;
@@ -229,6 +229,147 @@ header #fireTrack{
 .rankMe{margin:10px 0;padding:9px;border-radius:9px;background:#213b46;text-align:center;font-size:12px}
 .rankClose{width:100%;padding:11px;border:0;border-radius:10px;background:#72e288;font-weight:1000;margin-top:10px}
 .rankStatus{text-align:center;color:#c9d4da;font-size:12px;padding:14px}
+
+#partnerCutin{position:fixed;inset:0;z-index:140;display:none;place-items:center;background:#05070bf2;padding:18px;text-align:center}
+#partnerCutin.show{display:grid;animation:partnerFlash .22s steps(2,end) 3}
+.partnerCutCard{width:min(430px,94vw);border:3px solid #ffe36b;border-radius:20px;background:#16242d;padding:22px 16px;box-shadow:0 0 40px #ffb00088}
+#partnerIcon{font-size:58px}.partnerKicker{font-size:13px;font-weight:1000;color:#ffd86a;letter-spacing:.12em}
+#partnerTitle{font-size:29px;font-weight:1000;margin:5px 0;color:#fff}.partnerCopy{font-size:15px;font-weight:900;color:#dce7ec}
+#bonusHud{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:60;display:none;background:#ffcc3a;color:#172832;border:3px solid #fff;border-radius:12px;padding:5px 12px;font-weight:1000;box-shadow:0 4px 16px #0007;white-space:nowrap}
+#bonusHud.show{display:block;animation:bonusPulse .55s infinite alternate}
+#view.partnerField .road{filter:brightness(1.16)}
+#view.partnerField .car{display:none!important}
+@keyframes partnerFlash{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes bonusPulse{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.06)}}
+
+#partnerHeat{
+  position:absolute;inset:0;z-index:58;pointer-events:none;
+  opacity:0;mix-blend-mode:screen;
+}
+#partnerHeat.flash{animation:partnerHeatFlash .24s steps(2,end) 7}
+#partnerHeat.hold{opacity:.19}
+#partnerHeat.BOOST{background:radial-gradient(circle at 50% 45%,#fff26b 0,#ff6a00 38%,#ff1f00 78%,transparent 100%)}
+#partnerHeat.HELPER{background:radial-gradient(circle at 50% 45%,#ffffff 0,#2fd7ff 40%,#1767ff 78%,transparent 100%)}
+#partnerHeat.TASK{background:radial-gradient(circle at 50% 45%,#fff6a7 0,#7cff55 40%,#17b83e 78%,transparent 100%)}
+#partnerHeat.FIELD{background:radial-gradient(circle at 50% 45%,#fff1ff 0,#ff4ed1 38%,#7d37ff 78%,transparent 100%)}
+@keyframes partnerHeatFlash{
+  0%,100%{opacity:.18}
+  50%{opacity:.88}
+}
+
+#partnerCutin{
+  position:fixed;inset:0;z-index:160;display:none;
+  background:#020304;color:#fff;overflow:hidden;
+  place-items:center;text-align:center;
+}
+#partnerCutin.show{display:grid}
+#partnerCutin:before{
+  content:"";
+  position:absolute;inset:-20%;
+  background:
+    repeating-linear-gradient(135deg,transparent 0 24px,#ffffff09 24px 28px),
+    radial-gradient(circle at 50% 50%,#ffffff12 0,transparent 58%);
+  animation:scanRush .42s linear infinite;
+}
+.partnerCutCard{
+  position:relative;z-index:2;
+  width:100%;max-width:none;
+  border:0;border-radius:0;background:transparent;
+  padding:0 14px;box-shadow:none;
+  transform:none;
+}
+.partnerGameSet{
+  font-size:17px;font-weight:1000;letter-spacing:.32em;
+  color:#aeb7bc;margin-bottom:20px;
+  opacity:0;
+}
+#partnerCutin.phaseGameSet .partnerGameSet{animation:gameSetFake .8s ease forwards}
+.partnerKicker{
+  font-size:14px;font-weight:1000;letter-spacing:.28em;
+  color:#fff;opacity:0;
+}
+#partnerTitle{
+  margin:5px 0 0;
+  font-family:Impact,"Arial Black",sans-serif;
+  font-size:clamp(48px,13vw,88px);
+  line-height:.88;letter-spacing:.035em;
+  color:#fff;
+  text-shadow:0 5px 0 #000,0 0 22px currentColor;
+  opacity:0;
+}
+#partnerName{
+  margin-top:16px!important;
+  font-size:clamp(27px,7vw,46px)!important;
+  font-family:Impact,"Arial Black",sans-serif;
+  letter-spacing:.05em;color:#ffe36b!important;
+  opacity:0;
+}
+.partnerCopy{
+  margin-top:10px;
+  font-size:clamp(14px,4vw,21px)!important;
+  letter-spacing:.04em;
+  opacity:0;
+}
+#partnerIcon{
+  font-size:clamp(66px,18vw,110px)!important;
+  line-height:1;
+  opacity:0;
+}
+#partnerCutin.phaseReveal #partnerIcon{animation:iconCrash .42s cubic-bezier(.1,.9,.25,1) forwards}
+#partnerCutin.phaseReveal .partnerKicker{animation:slamText .32s .08s ease-out forwards}
+#partnerCutin.phaseReveal #partnerTitle{animation:slamTitle .42s .18s cubic-bezier(.05,.9,.2,1.1) forwards}
+#partnerCutin.phaseReveal #partnerName{animation:slamText .3s .42s ease-out forwards}
+#partnerCutin.phaseReveal .partnerCopy{animation:slamText .3s .55s ease-out forwards}
+#partnerCutin.flashRed{--cut:#ff512f}
+#partnerCutin.flashBlue{--cut:#36c8ff}
+#partnerCutin.flashGreen{--cut:#74ff54}
+#partnerCutin.flashPurple{--cut:#dc55ff}
+#partnerCutin.phaseReveal{box-shadow:inset 0 0 120px var(--cut)}
+#partnerCutin.phaseReveal:after{
+  content:"";
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:var(--cut);
+  mix-blend-mode:screen;
+  animation:hardFlash .17s steps(2,end) 5;
+}
+#partnerCutin.phaseReveal #partnerTitle,
+#partnerCutin.phaseReveal #partnerName{color:var(--cut)}
+#partnerBurst{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%,#ffffff18 0 4deg,transparent 4deg 10deg);
+  transform:scale(1.6);
+  animation:burstSpin 1s linear infinite;
+}
+#partnerBonusReady{
+  position:absolute;left:50%;bottom:7%;transform:translateX(-50%);
+  z-index:4;font-size:15px;font-weight:1000;letter-spacing:.16em;
+  background:#fff;color:#111;padding:7px 14px;border-radius:999px;
+  opacity:0;
+}
+#partnerCutin.phaseReveal #partnerBonusReady{animation:slamText .25s .7s ease-out forwards}
+@keyframes gameSetFake{
+  0%{opacity:0;transform:scale(.9)}
+  30%,75%{opacity:1;transform:scale(1)}
+  100%{opacity:.2;transform:scale(1.02)}
+}
+@keyframes slamTitle{
+  0%{opacity:0;transform:scale(2.4) skewX(-10deg)}
+  58%{opacity:1;transform:scale(.92) skewX(2deg)}
+  100%{opacity:1;transform:scale(1)}
+}
+@keyframes slamText{
+  0%{opacity:0;transform:translateY(22px) scale(1.25)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes iconCrash{
+  0%{opacity:0;transform:scale(3.2) rotate(-20deg)}
+  60%{opacity:1;transform:scale(.84) rotate(4deg)}
+  100%{opacity:1;transform:scale(1)}
+}
+@keyframes hardFlash{0%,100%{opacity:.08}50%{opacity:.92}}
+@keyframes scanRush{to{transform:translate(28px,28px)}}
+@keyframes burstSpin{to{transform:scale(1.6) rotate(18deg)}}
 </style></head>
 <body><div id="app"><header>
 <div class="top">
@@ -245,7 +386,7 @@ header #fireTrack{
 </div>
 <div class="sub"><span id="status">タスクをタップ！</span><span id="combo">COMBO 0</span></div>
 </header>
-<main id="view"><div id="world">
+<main id="view"><div id="partnerHeat"></div><div id="bonusHud">✨ PARTNERS BONUS <span id="bonusTime">15</span>s</div><div id="world">
 <div id="whiteModelOverlay" aria-hidden="true">
   <!-- building masses -->
   <div class="wm-building" style="left:0;top:0;width:15%;height:46%"></div>
@@ -307,7 +448,7 @@ header #fireTrack{
 <div class="shop hide" id="friends"><button class="buy" data-buy="kids">👦👧👦 子供3人組<span>260 GSpt｜高速・遊ぶ</span></button><button class="buy" data-buy="plog">🏃 プロギングマスター<span>290 GSpt｜ゴミ専用</span></button><button class="buy" data-buy="sweep">🧹 レレレ的おじさん<span>270 GSpt｜落ち葉のプロ</span></button><button class="buy" data-buy="robot">🤖 草刈りロボ<span>380 GSpt｜草専用・範囲処理</span></button></div>
 <div class="shop hide" id="machines"><div style="grid-column:1/-1;text-align:center;font-size:10px;color:#8fa0aa;padding:10px">機材枠は準備中</div></div>
 </footer></div>
-<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.2 WHITE MODEL</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
+<div id="ov"><div class="card" id="startCard"><h1>GOOD STREET</h1><h2>Ver. 5.3.5 PARTNERS TEST</h2><input id="playerName" maxlength="20" placeholder="プレイヤー名を入力" autocomplete="nickname"><p>4.3.4はスコア上限なし。5評価もシビア化。初めての人はチュートリアルから！<br>👦👧👦は3人で高速散開、🏃はゴミ専門、🧹は落ち葉のプロ。<br>GSptは所持／累計を分離。子供たちは一定時間で遊び始めますｗ</p><button id="start" class="primary">▶ GAME PLAY</button><button id="tutorialBtn" class="tutorialBtn" type="button">📖 遊び方・チュートリアル</button></div><div class="card hide" id="result"><h1>RESULT</h1><p id="resultText"></p>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0 8px">
 
 
@@ -323,18 +464,37 @@ header #fireTrack{
     <button id="rankClose" class="rankClose" type="button">閉じる</button>
   </div>
 </div>
+<div id="partnerCutin">
+  <div id="partnerBurst"></div>
+  <div class="partnerCutCard">
+    <div class="partnerGameSet">GAME SET...</div>
+    <div class="partnerKicker">SPECIAL BONUS CONFIRMED</div>
+    <div id="partnerIcon">🎪</div>
+    <div id="partnerTitle">GS PARTNERS<br>参 上</div>
+    <div id="partnerName"></div>
+    <div id="partnerCopy" class="partnerCopy"></div>
+  </div>
+  <div id="partnerBonusReady">BONUS TIME 15 SEC</div>
+</div>
 <script>
 (()=>{
 const $=s=>document.querySelector(s), world=$("#world"),view=$("#view"),W=1000,D=120;
 const C={trash:["🗑️",1900,32],grass:["🌿",2600,40],leaf:["🍂",2300,36],poop:["💩",3000,48]}, SE=[["🌸","春"],["☀️","夏"],["🍁","秋"],["❄️","冬"]];
 const crossingDefs=[{y:170,signalized:false},{y:475,signalized:true},{y:745,signalized:true}],sideCrossings={L:{x:28,y1:500,y2:720},R:{x:72,y1:500,y2:720}},crossings=crossingDefs.map(c=>c.y),plants=[],trees=[],signals=[]; let run=0,left=D,pts=0,totalPts=0,combo=0,last=0,cam=0,busy=0,tasks=[],units=[],cars=[],season=0,machine=0,armed=null,ints=[];
 let playLog=null,lastLogJson="";
+let partnerBonus=false,partnerType="",partnerBonusPts=0,partnerEndTimer=null;
+const PARTNER_TYPES=[
+ {id:"BOOST",icon:"🔥",name:"BOOST TYPE",copy:"みんなの清掃力が爆上がり！"},
+ {id:"HELPER",icon:"👥",name:"HELPER TYPE",copy:"助っ人軍団、緊急参戦！"},
+ {id:"TASK",icon:"🧹",name:"TASK TYPE",copy:"得意タスクを一気に片づけろ！"},
+ {id:"FIELD",icon:"🎪",name:"FIELD TYPE",copy:"歩行者天国、開幕！"}
+];
 let fire=0,fireActive=false,fireTimer=null;
 let paused=false,cutinActive=false,fireCount=0,resultSent=false,currentPlayer="",crossingBusy=[0,0,0];
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:290,sweep:270,robot:380,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function setY(el,y){el.style.top=(y/W*100)+"%"}function getY(el){let t=parseFloat(el.style.top)||0;return t/100*W} function side(x){return x<50?"L":"R"} function camera(y){cam=0;world.style.transform="none"}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"5.2-white",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"5.3.5-partners-test",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
 function logText(){if(!playLog)return "";let a=playLog.tasks.ages,avg=a.length?a.reduce((x,y)=>x+y,0)/a.length:0;return JSON.stringify({...playLog,metrics:{avgClearAgeSec:+avg.toFixed(1),purchaseCount:playLog.purchases.length}},null,2)}
 
@@ -521,7 +681,7 @@ else if(k==="trash"){if(Math.random()<.65){let z=plants[Math.floor(Math.random()
 else{x=Math.random()<.5?21+Math.random()*16:63+Math.random()*16;y=35+Math.random()*(W-70)}
 if(tasks.some(t=>Math.hypot((t.x-x)*5,(t.y-y)/10)<13))return;let e=document.createElement("div");e.className="e task";e.textContent=C[k][0];e.style.left=x+"%";setY(e,y);let o={k,x,y,e,born:performance.now(),busy:0};e.onclick=ev=>{ev.stopPropagation();select(o)};world.append(e);tasks.push(o);if(playLog){playLog.tasks.spawned[k]++;playLog.tasks.spawned.total++;playLog.tasks.maxConcurrent=Math.max(playLog.tasks.maxConcurrent,tasks.length);evt("spawn",{task:k})}}
 function select(o){if(!run||paused||busy||o.busy)return;busy=1;o.busy=1;$("#status").textContent="移動中…";route(player,parseFloat(player.style.left),getY(player),o.x,o.y,1,1).then(()=>work(player,o,1,"player"))}
-function work(el,o,isP,type){if(!run||!o.e.isConnected){if(isP)busy=0;return}$("#status").textContent=isP?"清掃中…":$("#status").textContent;let p=document.createElement("div");p.className="prog";p.innerHTML="<i></i>";el.append(p);let base=C[o.k][1],mult=1;if(type==="kid")mult=1.55;if(type==="plog")mult=o.k==="trash"?.12:99;if(type==="sweep")mult=o.k==="leaf"?.18:(o.k==="trash"?.9:1.8);if(type==="robot")mult=o.k==="grass"?.45:99;if(mult>20){p.remove();o.busy=0;if(!isP)el.dataset.busy="0";return}let dur=Math.max(280,base*mult/(1+(inv[o.k]-1)*.25)/(1+machine*.18)),st=performance.now();let pauseAt=null,pauseSum=0;function f(n){if(!run){p.remove();return}if(paused){if(pauseAt===null)pauseAt=n;requestAnimationFrame(f);return}if(pauseAt!==null){pauseSum+=n-pauseAt;pauseAt=null}let q=clamp((n-st-pauseSum)/dur,0,1);p.firstChild.style.width=q*100+"%";if(q<1)requestAnimationFrame(f);else{p.remove();clearTask(o,isP,el,type)}}requestAnimationFrame(f)}
+function work(el,o,isP,type){if(!run||!o.e.isConnected){if(isP)busy=0;return}$("#status").textContent=isP?"清掃中…":$("#status").textContent;let p=document.createElement("div");p.className="prog";p.innerHTML="<i></i>";el.append(p);let base=C[o.k][1],mult=1;if(type==="kid")mult=1.55;if(type==="helper")mult=.38;if(type==="plog")mult=o.k==="trash"?.12:99;if(type==="sweep")mult=o.k==="leaf"?.18:(o.k==="trash"?.9:1.8);if(type==="robot")mult=o.k==="grass"?.45:99;if(mult>20){p.remove();o.busy=0;if(!isP)el.dataset.busy="0";return}let dur=Math.max(280,base*mult/(1+(inv[o.k]-1)*.25)/(1+machine*.18)),st=performance.now();let pauseAt=null,pauseSum=0;function f(n){if(!run){p.remove();return}if(paused){if(pauseAt===null)pauseAt=n;requestAnimationFrame(f);return}if(pauseAt!==null){pauseSum+=n-pauseAt;pauseAt=null}let q=clamp((n-st-pauseSum)/dur,0,1);p.firstChild.style.width=q*100+"%";if(q<1)requestAnimationFrame(f);else{p.remove();clearTask(o,isP,el,type)}}requestAnimationFrame(f)}
 function clearTask(o,isP,el,type){if(!o.e.isConnected)return;let now=performance.now(),age=(now-o.born)/1000,f=age<8?1:age<18?.8:age<30?.55:.35,earn=Math.max(8,Math.round(C[o.k][2]*f));combo=now-last<4300?combo+1:1;last=now;earn=Math.round(earn*(1+Math.min(combo-1,8)*.04));pts+=earn;totalPts+=earn;addFire(5+(combo>=3?2:0)+(((type==="plog"&&o.k==="trash")||(type==="sweep"&&o.k==="leaf")||(type==="robot"&&o.k==="grass"))?5:0));if(playLog){playLog.tasks.cleared[o.k]++;playLog.tasks.cleared.total++;playLog.tasks.ages.push(+age.toFixed(1));playLog.actors[type]++;playLog.maxCombo=Math.max(playLog.maxCombo,combo);if((type==="plog"&&o.k==="trash")||(type==="sweep"&&o.k==="leaf")||(type==="robot"&&o.k==="grass"))playLog.goodMatch++;evt("clear",{task:o.k,actor:type,age:+age.toFixed(1),gspt:earn,combo})}spark(o.x,o.y,earn);o.e.remove();tasks=tasks.filter(t=>t!==o);if(type==="robot"&&o.k==="grass"){let nearby=tasks.filter(t=>t.k==="grass"&&Math.abs(t.y-o.y)<120&&Math.abs(t.x-o.x)<9).slice(0,4);nearby.forEach((t,i)=>setTimeout(()=>{if(t.e.isConnected){pts+=Math.round(C.grass[2]*.45);totalPts+=Math.round(C.grass[2]*.45);spark(t.x,t.y,Math.round(C.grass[2]*.45));t.e.remove();tasks=tasks.filter(q=>q!==t);hud()}},100+i*90))}
 if(isP){busy=0;$("#status").textContent="次のタスクをタップ！"}else el.dataset.busy="0";comboFx();hud();setTimeout(assign,80)}
 function spark(x,y,n){["✦","✨","✦"].forEach((q,i)=>{let s=document.createElement("div");s.className="spark";s.textContent=q;s.style.left=(x+(i-1)*2)+"%";s.style.top=((y+(i-1)*5)/W*100)+"%";world.append(s);setTimeout(()=>s.remove(),650)});let z=document.createElement("div");z.className="score";z.textContent="+"+n+" GSpt";z.style.left=x+"%";z.style.top=((y-16)/W*100)+"%";world.append(z);setTimeout(()=>z.remove(),900)}
@@ -563,7 +723,7 @@ function car(){
 }
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");["tools","friends","machines"].forEach(x=>$("#"+x).classList.toggle("hide",x!==b.dataset.tab))});
 document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run||paused)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}let paid=prices[k];pts-=paid;if(playLog){playLog.gspt.spent+=paid;playLog.purchases.push({t:D-left,item:k,cost:paid,season});evt("purchase",{item:k,cost:paid})}b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,820,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,820,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,820,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();updateRacks(k);assign()});
-function reset(){crossingBusy=[0,0,0];fireCount=0;resultSent=false;paused=false;$("#pauseOverlay").classList.remove("show");$("#pauseBtn").classList.remove("paused");$("#pauseBtn").textContent="⏸";ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;fire=0;fireActive=false;clearTimeout(fireTimer);$("#view").classList.remove("fireMode");fireHud();left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:320,sweep:300,robot:420,boost:400};player.style.left="27%";setY(player,900);camera(0);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.toggle("green",s.crossing==="side"?!signalGreen:signalGreen));hud()}
+function reset(){crossingBusy=[0,0,0];fireCount=0;partnerBonus=false;partnerType="";partnerBonusPts=0;clearInterval(partnerEndTimer);$("#partnerCutin")?.classList.remove("show");$("#bonusHud")?.classList.remove("show");if($("#partnerHeat"))$("#partnerHeat").className="";$("#view")?.classList.remove("partnerField");resultSent=false;paused=false;$("#pauseOverlay").classList.remove("show");$("#pauseBtn").classList.remove("paused");$("#pauseBtn").textContent="⏸";ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;fire=0;fireActive=false;clearTimeout(fireTimer);$("#view").classList.remove("fireMode");fireHud();left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:290,sweep:270,robot:380,boost:400};player.style.left="27%";setY(player,900);camera(0);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.toggle("green",s.crossing==="side"?!signalGreen:signalGreen));hud()}
 async function start(){let nm=$("#playerName").value.trim();if(!nm){toast("プレイヤー名を入力してね");$("#playerName").focus();return}currentPlayer=nm;localStorage.setItem("gsPlayerName",nm);reset();playLog=initLog();playLog.playerName=currentPlayer;resultSent=false;$("#sendResult").disabled=false;$("#sendResult").textContent="📤 結果を送信";$("#start").disabled=true;$("#ov").classList.add("hide");let cd=$("#countdown"),ct=$("#countdownText");cd.classList.add("show");for(let n of ["3","2","1"]){ct.className="";ct.textContent=n;await new Promise(r=>setTimeout(r,800))}ct.className="go";ct.textContent="GOOD STREET！";await new Promise(r=>setTimeout(r,650));cd.classList.remove("show");$("#start").disabled=false;run=1;$("#ov").classList.add("hide");evt("game_start");toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{if(paused)return;left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{if(paused)return;let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(()=>{if(!paused)spread()},3400),setInterval(()=>{
   if(paused)return;
   signalGreen=!signalGreen;
@@ -572,7 +732,101 @@ async function start(){let nm=$("#playerName").value.trim();if(!nm){toast("プ�
     s.e.classList.toggle("green",isSide?!signalGreen:signalGreen);
   })
 },5400),setInterval(()=>{if(!paused)car()},4300))}
-function end(){run=0;ints.forEach(clearInterval);
+
+function partnerMassSpawn(type){
+ const before=totalPts;
+ let burst=type==="FIELD"?14:12;
+ for(let i=0;i<burst;i++){
+   let k;
+   if(type==="TASK"){
+     const ks=["trash","grass","leaf","poop"]; k=ks[Math.floor(Math.random()*ks.length)];
+   }else k=kind();
+   spawn(k);
+ }
+ assign();
+}
+function addPartnerHelpers(){
+ for(let i=0;i<5;i++){
+   let e=document.createElement("div");e.className="e unit";e.textContent="🦺";e.dataset.type="helper";
+   e.style.left=(25+Math.random()*50)+"%";setY(e,260+Math.random()*1200);world.append(e);units.push(e);
+ }
+}
+function finishPartnerBonus(){
+ partnerBonus=false;
+ clearInterval(partnerEndTimer);
+ $("#bonusHud").classList.remove("show");$("#partnerHeat").className="";
+ $("#view").classList.remove("partnerField","fireMode");
+ machine=0;
+ end(true);
+}
+function startPartnerBonus(){
+ partnerBonus=true;partnerBonusPts=totalPts;
+ const p=PARTNER_TYPES[Math.floor(Math.random()*PARTNER_TYPES.length)];
+ partnerType=p.id;
+
+ const cut=$("#partnerCutin");
+ const heat=$("#partnerHeat");
+ const cutClass={
+   BOOST:"flashRed",HELPER:"flashBlue",TASK:"flashGreen",FIELD:"flashPurple"
+ }[p.id]||"flashRed";
+
+ $("#partnerIcon").textContent=p.icon;
+ $("#partnerName").textContent=p.name;
+ $("#partnerCopy").textContent=p.copy;
+
+ cut.className="show phaseGameSet "+cutClass;
+ heat.className=p.id+" flash";
+ evt("partners_bonus",{type:p.id});
+
+ // Fake finish first, then smash into the guaranteed bonus reveal.
+ setTimeout(()=>{
+   cut.className="show phaseReveal "+cutClass;
+ },820);
+
+ setTimeout(()=>{
+   cut.className="";
+   heat.className=p.id+" hold";
+
+   // Recover all actors from winter-end transition.
+   busy=0;
+   tasks.forEach(o=>o.busy=0);
+   units.forEach(u=>{u.dataset.busy="0";const pr=u.querySelector(".prog");if(pr)pr.remove()});
+   const pp=player.querySelector(".prog");if(pp)pp.remove();
+
+   run=1;left=15;season=3;
+   $("#season").textContent="✨ BONUS";
+   $("#bonusHud").classList.add("show");
+
+   if(p.id==="BOOST"){machine+=4;$("#view").classList.add("fireMode")}
+   if(p.id==="HELPER"){addPartnerHelpers()}
+   if(p.id==="FIELD"){$("#view").classList.add("partnerField")}
+
+   partnerMassSpawn(p.id);
+   assign();
+
+   let tick=15;
+   $("#bonusTime").textContent=tick;
+   partnerEndTimer=setInterval(()=>{
+     if(paused)return;
+     tick--;left=tick;
+     $("#bonusTime").textContent=Math.max(0,tick);
+     hud();
+
+     // Deliberate task flood during the rare bonus state.
+     partnerMassSpawn(p.id);
+
+     if(tick<=0)finishPartnerBonus();
+   },1000);
+ },2100);
+}
+function end(fromBonus=false){
+ run=0;ints.forEach(clearInterval);ints=[];
+ if(!fromBonus && !partnerBonus){
+   // Ver.5.3 test: 100% chance. Later this becomes the rare-event probability.
+   startPartnerBonus();
+   return;
+ }
+
 const spawned=playLog?.tasks?.spawned?.total||1,cleared=playLog?.tasks?.cleared?.total||0,remaining=tasks.length,clearRate=cleared/spawned;
 const ages=playLog?.tasks?.ages||[],avgAge=ages.length?ages.reduce((a,b)=>a+b,0)/ages.length:30;
 const purchases=playLog?.purchases||[],types=new Set(purchases.map(p=>p.item)),specialists=["kids","plog","sweep","robot"].filter(k=>types.has(k)).length;
@@ -585,7 +839,7 @@ let strategy=clamp(clearRate*35+Math.min(25,good*3)+specialists*5+Math.min(10,fi
 let avg=(clean+action+equip+team+strategy)/5;
 let finalScore=Math.max(0,Math.round(totalPts*4.2+cleared*38+good*55+maxC*22+fireCount*120+avg*18-remaining*45));
 let rank=finalScore>=9000?"S":finalScore>=7000?"A":finalScore>=5200?"B":finalScore>=3500?"C":"D";
-$("#resultText").innerHTML=`<span style="font-size:12px;color:#aebbc4">GOOD STREET SCORE</span><br><b style="font-size:34px;color:#ffe66a">${finalScore.toLocaleString()} pt</b><br><span style="font-size:21px">RANK <b>${rank}</b></span><br><br>累計 <b>${totalPts} GSpt</b> ／ 所持 ${pts} GSpt<br>処理 ${cleared}件 ／ 残タスク ${remaining}件<br><br>🧹 CLEAN ${Math.round(clean)}<br>⚡ ACTION ${Math.round(action)}<br>🛠 EQUIPMENT ${Math.round(equip)}<br>🤝 TEAM ${Math.round(team)}<br>🧠 STRATEGY ${Math.round(strategy)}`;
+const partnerGain=Math.max(0,totalPts-partnerBonusPts);$("#resultText").innerHTML=`<span style="font-size:12px;color:#aebbc4">GOOD STREET SCORE</span><br><b style="font-size:34px;color:#ffe66a">${finalScore.toLocaleString()} pt</b><br><span style="font-size:21px">RANK <b>${rank}</b></span><br><br>累計 <b>${totalPts} GSpt</b> ／ 所持 ${pts} GSpt<br>処理 ${cleared}件 ／ 残タスク ${remaining}件<br>${partnerType?`✨ PARTNERS ${partnerType} ／ BONUS +${partnerGain} GSpt<br>`:""}<br>🧹 CLEAN ${Math.round(clean)}<br>⚡ ACTION ${Math.round(action)}<br>🛠 EQUIPMENT ${Math.round(equip)}<br>🤝 TEAM ${Math.round(team)}<br>🧠 STRATEGY ${Math.round(strategy)}`;
 if(playLog){playLog.endedAt=new Date().toISOString();playLog.score=finalScore;playLog.rank=rank;playLog.gspt.earned=totalPts;playLog.gspt.remaining=pts;playLog.finalAxes={clean:Math.round(clean),action:Math.round(action),equipment:Math.round(equip),team:Math.round(team),strategy:Math.round(strategy)};["trash","grass","leaf","poop"].forEach(k=>playLog.tasks.remaining[k]=tasks.filter(t=>t.k===k).length);playLog.tasks.remaining.total=tasks.length;playLog.fireCount=fireCount;playLog.playerName=currentPlayer;evt("game_end",{score:finalScore,rank});lastLogJson=logText()}
 $("#ov").classList.remove("hide");$("#startCard").classList.add("hide");$("#result").classList.remove("hide");
 $("#result").classList.add("resultLock");$("#again").classList.add("locked");$("#again").disabled=true;$("#again").textContent="結果を確認中…";
@@ -657,7 +911,7 @@ $("#rankClose").onclick=()=>$("#rankingModal").classList.remove("show");
 
 const FORM_URL="https://docs.google.com/forms/d/e/1FAIpQLSc26_ybjqCkAbZVkENsyrWo_Is7osQ8ws1E7nJzwCLo__abEg/formResponse";
 function boughtCount(k){return playLog?playLog.purchases.filter(p=>p.item===k).length:0}
-async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"5.2-white",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
+async function submitResult(){if(resultSent||!playLog||!lastLogJson)return;const b=$("#sendResult");b.disabled=true;b.textContent="送信中…";const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};const vals=[currentPlayer,"5.3.5-partners-test",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];const fd=new FormData();const ids=["1815354379", "622955691", "1734014499", "377968917", "285722605", "1164263001", "1589887019", "1465935588", "1847411221", "1584653803", "1944768313", "1353642827", "2083490023", "1489798462", "1944906170", "453762315", "1307703815", "180952359", "366608", "903899483", "1633584540", "2048218729", "1442573983", "1341638158", "1827966976", "1044356346", "539455207"];ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));try{await fetch(FORM_URL,{method:"POST",mode:"no-cors",body:fd});resultSent=true;b.textContent="✓ 結果を送信しました";toast("📤 結果を送信しました！")}catch(e){b.disabled=false;b.textContent="📤 結果を送信";toast("送信できませんでした")}}
 $("#sendResult").onclick=submitResult;
 $("#playerName").value=localStorage.getItem("gsPlayerName")||"";
 reset();
