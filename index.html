@@ -1001,7 +1001,7 @@ body.tutorial-running .task:not(.tutorial-allowed){pointer-events:none!important
 </div>
 <div id="partnerAdModal"><div class="partnerAdCard"><div class="partnerAdKicker">SPECIAL THANKS｜GS PARTNERS</div><img id="partnerAdImage" alt="GS PARTNERS 広告"><div id="partnerAdText"><div id="partnerAdTextTitle"></div><div id="partnerAdTextBody"></div></div><button id="partnerAdClose" type="button">リザルトへ戻る</button></div></div>
 <script>
-// Ver.5.5.2: GS PARTNERS fully externalized / appearance rate 30%
+// Ver.5.5.3: GAS image delivery / PARTNERS test mode / normal rate 30%
 (()=>{
 const $=s=>document.querySelector(s), world=$("#world"),view=$("#view"),W=1000,D=120;
 const C={trash:["🗑️",1900,32],grass:["🌿",2600,40],leaf:["🍂",2300,36],poop:["💩",3000,48]}, SE=[["🌸","春"],["☀️","夏"],["🍁","秋"],["❄️","冬"]];
@@ -1012,8 +1012,11 @@ let lastPartner=null;
 let actionEpoch=0;
 let tutorialMode=false,tutorialStep=0,tutorialTask=null,tutorialFireTapped=false;
 const PARTNER_TYPES=[]; // legacy embedded demo PARTNERS removed
-const PARTNERS_API_URL="https://script.google.com/macros/s/AKfycbwxOadUUzRcI5fQdx1nssPWDcOChNQI8e5IlQ27f3f7P842xxFPAhonRuNwSL0SoQhB/exec?mode=partners";
-const PARTNERS_APPEAR_RATE=0.30; // GS PARTNERS出現率 30%
+const PARTNERS_API_BASE="https://script.google.com/macros/s/AKfycbwxOadUUzRcI5fQdx1nssPWDcOChNQI8e5IlQ27f3f7P842xxFPAhonRuNwSL0SoQhB/exec";
+const PARTNERS_API_URL=PARTNERS_API_BASE+"?mode=partners";
+const PARTNERS_APPEAR_RATE=0.30;
+const PARTNERS_TEST_MODE=new URLSearchParams(location.search).get("partnersTest")==="1";
+const PARTNERS_EFFECTIVE_RATE=PARTNERS_TEST_MODE?1.00:PARTNERS_APPEAR_RATE;
 const PARTNER_EFFECTS={
   BOOST:{icon:"🔥",effectTitle:"🔥 みんなのスピードがMAX！",effectText:"プレイヤーも仲間も、いつもより素早く清掃できます。15秒間で一気に稼ごう！"},
   HELPER:{icon:"🦺",effectTitle:"🦺 助っ人チーム参上！",effectText:"15秒間、臨時ヘルパーがまちなかの清掃に加わります。みんなで一気に片付けよう！"},
@@ -1026,7 +1029,7 @@ let paused=false,cutinActive=false,fireCount=0,resultSent=false,currentPlayer=""
 let inv={trash:1,grass:1,leaf:1,poop:1}, prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:290,sweep:270,robot:380,boost:400};
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function setY(el,y){el.style.top=(y/W*100)+"%"}function getY(el){let t=parseFloat(el.style.top)||0;return t/100*W} function side(x){return x<50?"L":"R"} function camera(y){cam=0;world.style.transform="none"}
 function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove("on"),1300)}
-function initLog(){return {version:"5.5.2-partners-external-lite",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
+function initLog(){return {version:"5.5.3-partners-image-api-testmode",startedAt:new Date().toISOString(),endedAt:null,score:null,rank:null,gspt:{earned:0,spent:0,remaining:0},tasks:{spawned:{trash:0,grass:0,leaf:0,poop:0,total:0},cleared:{trash:0,grass:0,leaf:0,poop:0,total:0},remaining:{trash:0,grass:0,leaf:0,poop:0,total:0},ages:[],maxConcurrent:0},purchases:[],actors:{player:0,kid:0,plog:0,sweep:0,robot:0},goodMatch:0,maxCombo:0,events:[],finalAxes:null}}
 function evt(type,data={}){if(playLog)playLog.events.push({t:D-left,type,...data})}
 function logText(){
  if(!playLog)return "";
@@ -1073,26 +1076,8 @@ fireTimer=setTimeout(()=>{
 
 
 function normalizePartner(raw){
- const type=String(raw?.bonusType||"BOOST").toUpperCase();
- const fx=PARTNER_EFFECTS[type]||PARTNER_EFFECTS.BOOST;
- return {
-   id:String(raw?.id||""),
-   idRaw:String(raw?.id||""),
-   business:String(raw?.name||"GS PARTNER"),
-   message:String(raw?.message||"まちなかを一緒にGOODに！"),
-   idType:type,
-   icon:fx.icon,
-   effectTitle:fx.effectTitle,
-   effectText:fx.effectText,
-   logoMode:String(raw?.logoMode||"text").toLowerCase(),
-   logoText:String(raw?.logoText||raw?.name||"GS PARTNER"),
-   logo:String(raw?.logoImageUrl||raw?.logoUrl||""),
-   adMode:String(raw?.adMode||"text").toLowerCase(),
-   adTitle:String(raw?.adTitle||raw?.name||"GS PARTNER"),
-   adBody:String(raw?.adBody||raw?.message||""),
-   ad:String(raw?.adImageUrl||raw?.adUrl||""),
-   weight:Math.max(1,Number(raw?.weight)||1)
- };
+ const type=String(raw?.bonusType||"BOOST").toUpperCase(),fx=PARTNER_EFFECTS[type]||PARTNER_EFFECTS.BOOST;
+ return {id:String(raw?.id||""),idRaw:String(raw?.id||""),business:String(raw?.name||"GS PARTNER"),message:String(raw?.message||"まちなかを一緒にGOODに！"),idType:type,icon:fx.icon,effectTitle:fx.effectTitle,effectText:fx.effectText,logoMode:String(raw?.logoMode||"text").toLowerCase(),logoText:String(raw?.logoText||raw?.name||"GS PARTNER"),logoFileId:String(raw?.logoFileId||""),logo:"",adMode:String(raw?.adMode||"text").toLowerCase(),adTitle:String(raw?.adTitle||raw?.name||"GS PARTNER"),adBody:String(raw?.adBody||raw?.message||""),adFileId:String(raw?.adFileId||""),ad:"",weight:Math.max(1,Number(raw?.weight)||1)};
 }
 function weightedPartner(list){
  if(!list?.length)return null;
@@ -1101,14 +1086,14 @@ function weightedPartner(list){
  for(const p of list){r-=Math.max(1,Number(p.weight)||1);if(r<=0)return p}
  return list[list.length-1];
 }
-function preloadImage(url){
- if(!url)return Promise.resolve(false);
- return new Promise(resolve=>{
-   const im=new Image();
-   im.onload=()=>resolve(true);
-   im.onerror=()=>resolve(false);
-   im.src=url;
- });
+async function fetchPartnerImage(fileId){
+ if(!fileId)return "";
+ try{
+  const res=await fetch(PARTNERS_API_BASE+"?mode=image&fileId="+encodeURIComponent(fileId),{cache:"force-cache"});
+  const data=await res.json();
+  if(!res.ok||!data?.ok||!data.dataUrl)throw new Error(data?.error||("HTTP "+res.status));
+  return String(data.dataUrl);
+ }catch(err){console.warn("[GS PARTNERS] image load failed",fileId,err);return ""}
 }
 async function loadPartnerPool(){
  partnerApiReady=false;partnerApiError="";partnerPool=[];sessionPartner=null;
@@ -1121,9 +1106,8 @@ async function loadPartnerPool(){
    sessionPartner=weightedPartner(partnerPool);
    partnerApiReady=true;
    if(sessionPartner){
-     // 2分のプレイ中に必要な画像を先読み。開始時はリクエストを投げるだけでゲーム進行を止めない。
-     preloadImage(sessionPartner.logo);
-     preloadImage(sessionPartner.ad);
+     if(sessionPartner.logoMode==="image"&&sessionPartner.logoFileId)fetchPartnerImage(sessionPartner.logoFileId).then(v=>{if(v)sessionPartner.logo=v});
+     if(sessionPartner.adMode==="image"&&sessionPartner.adFileId)fetchPartnerImage(sessionPartner.adFileId).then(v=>{if(v)sessionPartner.ad=v});
    }
    console.log("[GS PARTNERS] loaded",partnerPool.length,sessionPartner);
    return sessionPartner;
@@ -1430,7 +1414,7 @@ function car(){
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");["tools","friends"].forEach(x=>$("#"+x).classList.toggle("hide",x!==b.dataset.tab))});
 document.querySelectorAll(".buy").forEach(b=>b.onclick=()=>{if(!run||paused)return;let k=b.dataset.buy;if(pts<prices[k]){toast("GSptが足りない");return}if(armed!==b){document.querySelectorAll(".buy").forEach(x=>x.classList.remove("armed"));b.classList.add("armed");armed=b;toast("もう1回タップで購入");setTimeout(()=>{b.classList.remove("armed");if(armed===b)armed=null},1500);return}let paid=prices[k];pts-=paid;if(playLog){playLog.gspt.spent+=paid;playLog.purchases.push({t:D-left,item:k,cost:paid,season});evt("purchase",{item:k,cost:paid})}b.classList.remove("armed");armed=null;if(["trash","grass","leaf","poop"].includes(k)){inv[k]++;prices[k]=Math.round(prices[k]*1.14);toast("道具追加！")}else if(k==="kids"){buyKids();prices[k]=Math.round(prices[k]*1.3)}else if(k==="plog"){makeUnit("plog",26,820,"🏃");toast("🏃 プロギングマスター参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="sweep"){makeUnit("sweep",27,820,"🧹");toast("🧹 レレレ的おじさん参加！");prices[k]=Math.round(prices[k]*1.3)}else if(k==="robot"){makeUnit("robot",34,820,"🤖");toast("🤖 草刈りロボ投入！");prices[k]=Math.round(prices[k]*1.35)}else{machine++;prices[k]=Math.round(prices[k]*1.35);toast("⚙ 機材強化！")}hud();updateRacks(k);assign()});
 function reset(){actionEpoch++;crossingBusy=[0,0,0];fireCount=0;partnerBonus=false;partnerType="";partnerBonusPts=0;lastPartner=null;clearInterval(partnerEndTimer);$("#partnerCutin")?.classList.remove("show");$("#bonusHud")?.classList.remove("show");if($("#partnerHeat"))$("#partnerHeat").className="";$("#view")?.classList.remove("partnerField");resultSent=false;paused=false;$("#pauseOverlay").classList.remove("show");$("#pauseBtn").classList.remove("paused");$("#pauseBtn").textContent="⏸";ints.forEach(clearInterval);ints=[];tasks.forEach(t=>t.e.remove());units.forEach(u=>u.remove());cars.forEach(c=>c.remove());tasks=[];units=[];cars=[];run=0;fire=0;fireActive=false;clearTimeout(fireTimer);clearInterval(fireDrainTimer);fireDrainTimer=null;$("#view").classList.remove("fireMode");$("#fireFx").className="";$("#fireFx").innerHTML="";fireHud();left=D;pts=0;totalPts=0;combo=0;last=0;busy=0;season=0;machine=0;signalGreen=true;inv={trash:1,grass:1,leaf:1,poop:1};prices={trash:70,grass:70,leaf:80,poop:90,kids:260,plog:290,sweep:270,robot:380,boost:400};player.style.left="27%";setY(player,900);camera(0);$("#season").textContent="🌸 春";signals.forEach(s=>s.e.classList.toggle("green",s.crossing==="side"?!signalGreen:signalGreen));hud()}
-async function start(){let nm=$("#playerName").value.trim();if(!nm){toast("プレイヤー名を入力してね");$("#playerName").focus();return}currentPlayer=nm;localStorage.setItem("gsPlayerName",nm);reset();$("#start").disabled=true;toast("🤝 GS PARTNERSを確認中…");await loadPartnerPool();playLog=initLog();playLog.playerName=currentPlayer;resultSent=false;$("#sendResult").disabled=false;$("#sendResult").textContent="📤 結果を送信";$("#start").disabled=true;$("#ov").classList.add("hide");let cd=$("#countdown"),ct=$("#countdownText");cd.classList.add("show");for(let n of ["3","2","1"]){ct.className="";ct.textContent=n;await new Promise(r=>setTimeout(r,800))}ct.className="go";ct.textContent="GOOD STREET！";await new Promise(r=>setTimeout(r,650));cd.classList.remove("show");$("#start").disabled=false;run=1;$("#ov").classList.add("hide");evt("game_start");if(playLog)evt("partner_preload",{apiReady:partnerApiReady,count:partnerPool.length,partnerId:sessionPartner?.idRaw||sessionPartner?.id||"",business:sessionPartner?.business||"",type:sessionPartner?.idType||sessionPartner?.id||"",apiError:partnerApiError});toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{if(paused)return;left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{if(paused)return;let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(()=>{if(!paused)spread()},3400),setInterval(()=>{
+async function start(){let nm=$("#playerName").value.trim();if(!nm){toast("プレイヤー名を入力してね");$("#playerName").focus();return}currentPlayer=nm;localStorage.setItem("gsPlayerName",nm);reset();$("#start").disabled=true;toast(PARTNERS_TEST_MODE?"🧪 PARTNERS TEST MODE｜出現率100%":"🤝 GS PARTNERSを確認中…");await loadPartnerPool();playLog=initLog();playLog.playerName=currentPlayer;resultSent=false;$("#sendResult").disabled=false;$("#sendResult").textContent="📤 結果を送信";$("#start").disabled=true;$("#ov").classList.add("hide");let cd=$("#countdown"),ct=$("#countdownText");cd.classList.add("show");for(let n of ["3","2","1"]){ct.className="";ct.textContent=n;await new Promise(r=>setTimeout(r,800))}ct.className="go";ct.textContent="GOOD STREET！";await new Promise(r=>setTimeout(r,650));cd.classList.remove("show");$("#start").disabled=false;run=1;$("#ov").classList.add("hide");evt("game_start");if(playLog)evt("partner_preload",{apiReady:partnerApiReady,count:partnerPool.length,partnerId:sessionPartner?.idRaw||sessionPartner?.id||"",business:sessionPartner?.business||"",type:sessionPartner?.idType||sessionPartner?.id||"",apiError:partnerApiError});toast("🦺 まず自分でGSptを稼ごう！");for(let i=0;i<8;i++)spawn();ints.push(setInterval(()=>{if(paused)return;left--;let ns=Math.min(3,Math.floor((D-left)/30));if(ns!==season){season=ns;$("#season").textContent=SE[ns][0]+" "+SE[ns][1];toast(SE[ns][0]+" "+SE[ns][1]+"になった！")}hud();if(left<=0)end()},1000),setInterval(()=>{if(paused)return;let n=[1,2,2,3][season];for(let i=0;i<n;i++)spawn();if(Math.random()<[.15,.35,.55,.7][season])spawn();assign()},2100),setInterval(()=>{if(!paused)spread()},3400),setInterval(()=>{
   if(paused)return;
   signalGreen=!signalGreen;
   signals.forEach(s=>{
@@ -1499,6 +1483,8 @@ function startPartnerBonus(){
  partnerType=p.idType||p.id||"BOOST";lastPartner=p;
  const cut=$("#partnerCutin"),heat=$("#partnerHeat"),tap=$("#partnerTap");
  const logo=$("#partnerLogoImage");
+ if(p.logoMode==="image"&&!p.logo&&p.logoFileId)fetchPartnerImage(p.logoFileId).then(v=>{if(v){p.logo=v;if(logo){logo.src=v;logo.style.display="block"}}});
+ if(p.adMode==="image"&&!p.ad&&p.adFileId)fetchPartnerImage(p.adFileId).then(v=>{if(v)p.ad=v});
  if(logo){
    if(p.logoMode==="image"&&p.logo){
      logo.src=p.logo;logo.alt=(p.business||"GS PARTNER")+" ロゴ";logo.style.display="block";
@@ -1558,7 +1544,7 @@ function end(){
  ints.forEach(clearInterval);ints=[];
  // GS PARTNERS: 掲載中PARTNERがあり、30%抽選に当選したときだけ発動
  if(!partnerBonus){
-   if(sessionPartner && Math.random()<PARTNERS_APPEAR_RATE){
+   if(sessionPartner && Math.random()<PARTNERS_EFFECTIVE_RATE){
      startPartnerBonus();
    }else{
      showResult(true);
@@ -1812,7 +1798,7 @@ async function submitResult(){
  const b=$("#sendResult");
  b.disabled=true;b.textContent="送信中…";
  const ax=playLog.finalAxes||{},cl=playLog.tasks.cleared||{},sp=playLog.tasks.spawned||{},rm=playLog.tasks.remaining||{};
- const vals=[currentPlayer,"5.5.2-partners-external-lite",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];
+ const vals=[currentPlayer,"5.5.3-partners-image-api-testmode",playLog.endedAt||new Date().toISOString(),playLog.score??"",playLog.rank??"",playLog.gspt.earned??"",playLog.gspt.remaining??"",playLog.maxCombo??0,playLog.goodMatch??0,fireCount,ax.clean??"",ax.action??"",ax.equipment??"",ax.team??"",ax.strategy??"",sp.total??0,cl.total??0,rm.total??0,cl.trash??0,cl.grass??0,cl.leaf??0,cl.poop??0,boughtCount("kids"),boughtCount("plog"),boughtCount("sweep"),boughtCount("robot"),lastLogJson];
  const fd=new FormData();
  const ids=["1815354379","622955691","1734014499","377968917","285722605","1164263001","1589887019","1465935588","1847411221","1584653803","1944768313","1353642827","2083490023","1489798462","1944906170","453762315","1307703815","180952359","366608","903899483","1633584540","2048218729","1442573983","1341638158","1827966976","1044356346","539455207"];
  ids.forEach((id,i)=>fd.append("entry."+id,String(vals[i]??"")));
